@@ -7,90 +7,62 @@ pwrsd <- 5
 ################################################################################
 ## HELPER FUNCTIONS
 
+# standard error of the mean
 sem <- function(x) {
   sd(x) / sqrt(length(x))
 }
 
+# margin of error
 ci95.t <- function(x) {
   qt(.975, length(x) - 1) * sem(x)
 }
 
+# rounding to three digits
 pretty.p <- function(x) {
   as.character(signif(x, digits = 3))
 }
 
 shinyServer(function(input, output, session) {
+  # conds <- reactive({
+  #   groups <- factor(c("Patients","Healthy Controls",
+  #                        levels = c("Patients", "Healthy Controls")))
+  #   expand.grid(group = groups,
+  #               condition = factor(c("Longer looking predicted",
+  #                                    "Shorter looking predicted"))) %>%
+  #     group_by(group, condition)
+  # })
   conds <- reactive({
-    if (input$control) {
-      groups <- factor(c("Experimental","Control",
-                         levels = c("Experimental", "Control")))
-    } else {
-      groups <- factor("Experimental")
-    }
-    expand.grid(group = groups,
-                condition = factor(c("Longer looking predicted",
-                                     "Shorter looking predicted"))) %>%
+    groups <- factor(c("Patients","Healthy Controls"),
+                         levels = c("Patients", "Healthy Controls"))
+    expand.grid(group = groups) %>%
       group_by(group, condition)
   })
 
-  ########### POWER COMPUTATIONS #############
+  # ########### GENERATE DATA #############
+  pwr_sim_data <- reactive({
+    if(input$go | input$go){
+      conds() %>%
+        do(data.frame(
+          pitch.variability = ifelse(
+            rep(.$group == "Patients", input$N),
+            rnorm(n = input$N,
+                  mean = pwrmu + (input$d_pwr * pwrsd) / 2,
+                  sd = pwrsd),
+            rnorm(n = input$N,
+                  mean = pwrmu - (input$d_pwr * pwrsd) / 2,
+                  sd = pwrsd)
+          )
 
-  # this is awful because RMA makes factors and dummy-codes them, so newpred
-  # needs to have this structure.
-  d_pwr <- reactive({
-    if (length(input$pwr_moderators > 0)) {
-      newpred_mat <- matrix(nrow = 0, ncol = 0)
-
-      if (any(input$pwr_moderators == "mean_age_months")) {
-        req(input$pwr_age_months)
-        newpred_mat <- c(newpred_mat, input$pwr_age_months)
-      }
-
-      if (any(input$pwr_moderators == "response_mode")) {
-        req(input$pwr_response_mode)
-
-        f_response_mode <- factor(pwrdata()$response_mode)
-        n <- length(levels(f_response_mode))
-
-        response_pred <- rep(0, n)
-        pred_seq <- seq(1:n)[levels(f_response_mode) == input$pwr_response_mode]
-        response_pred[pred_seq] <- 1
-
-        # remove intercept
-        response_pred <- response_pred[-1]
-
-        newpred_mat <- c(newpred_mat, response_pred)
-      }
-
-      if (any(input$pwr_moderators == "exposure_phase")) {
-        req(input$pwr_exposure_phase)
-
-        f_exp_phase <- factor(pwrdata()$exposure_phase)
-        n <- length(levels(f_exp_phase))
-
-        exposure_pred <- rep(0, n)
-        exposure_pred[seq(1:n)[levels(fep) == input$pwr_exposure_phase]] <- 1
-
-        # remove intercept
-        exposure_pred <- exposure_pred[-1]
-
-        newpred_mat <- c(newpred_mat, exposure_pred)
-      }
-
-      predict(pwrmodel(), newmods = newpred_mat)$pred
-    } else {
-      # special case when there are no predictors, predict doesn't work
-      pwrmodel()$b[,1][["intrcpt"]]
+        ))
     }
   })
 
-  # ########### GENERATE DATA #############
   pwr_sim_data <- reactive({
     if (input$go | !input$go) {
       conds() %>%
         do(data.frame(
           looking.time = ifelse(
-            rep(.$group == "Experimental" &
+            rep(.$group == "Patients" &
                   .$condition == "Longer looking predicted", input$N),
             rnorm(n = input$N,
                   mean = pwrmu + (input$d_pwr * pwrsd) / 2,
@@ -173,10 +145,10 @@ shinyServer(function(input, output, session) {
 
     longer_exp <- filter(pwr_sim_data(),
                          condition == "Longer looking predicted",
-                         group == "Experimental")$looking.time
+                         group == "Patients")$looking.time
     shorter_exp <- filter(pwr_sim_data(),
                           condition == "Shorter looking predicted",
-                          group == "Experimental")$looking.time
+                          group == "Patients")$looking.time
     p.e <- t.test(longer_exp, shorter_exp, paired = TRUE)$p.value
 
     stat.text <- paste("A t test of the experimental condition is ",
@@ -190,10 +162,10 @@ shinyServer(function(input, output, session) {
 
       longer_ctl <- filter(pwr_sim_data(),
                            condition == "Longer looking predicted",
-                           group == "Control")$looking.time
+                           group == "Healthy Controls")$looking.time
       shorter_ctl <- filter(pwr_sim_data(),
                             condition == "Shorter looking predicted",
-                            group == "Control")$looking.time
+                            group == "Healthy Controls")$looking.time
       p.c <- t.test(longer_ctl, shorter_ctl, paired = TRUE)$p.value
 
       a <- anova(lm(looking.time ~ group * condition, data = pwr_sim_data()))

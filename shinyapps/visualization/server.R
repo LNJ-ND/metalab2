@@ -266,7 +266,7 @@ shinyServer(function(input, output, session) {
   output$studies_box <- renderValueBox({
     valueBox(
       nrow(data()), "Experiments", icon = icon("list", lib = "glyphicon"),
-      color = "blue"
+      color = "olive"
     )
   })
 
@@ -274,7 +274,7 @@ shinyServer(function(input, output, session) {
     valueBox(
       sprintf("%.2f", no_mod_model()$b[,1][["intrcpt"]]), "Effect Size",
       icon = icon("record", lib = "glyphicon"),
-      color = "red"
+      color = "olive"
     )
   })
 
@@ -282,7 +282,7 @@ shinyServer(function(input, output, session) {
     valueBox(
       sprintf("%.2f", no_mod_model()$se[1]), "Effect Size SE",
       icon = icon("resize-horizontal", lib = "glyphicon"),
-      color = "red"
+      color = "olive"
     )
   })
 
