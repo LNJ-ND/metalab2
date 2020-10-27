@@ -266,7 +266,7 @@ shinyServer(function(input, output, session) {
   output$studies_box <- renderValueBox({
     valueBox(
       nrow(data()), "Experiments", icon = icon("list", lib = "glyphicon"),
-      color = "blue"
+      color = "light-blue"
     )
   })
 
@@ -274,7 +274,7 @@ shinyServer(function(input, output, session) {
     valueBox(
       sprintf("%.2f", no_mod_model()$b[,1][["intrcpt"]]), "Effect Size",
       icon = icon("record", lib = "glyphicon"),
-      color = "red"
+      color = "light-blue"
     )
   })
 
@@ -282,7 +282,7 @@ shinyServer(function(input, output, session) {
     valueBox(
       sprintf("%.2f", no_mod_model()$se[1]), "Effect Size SE",
       icon = icon("resize-horizontal", lib = "glyphicon"),
-      color = "red"
+      color = "light-blue"
     )
   })
 
@@ -290,7 +290,7 @@ shinyServer(function(input, output, session) {
     valueBox(
       sprintf("%.2f", no_mod_model()$tau2[1]), "Tau^2",
       icon = icon("resize-full", lib = "glyphicon"),
-      color = "red"
+      color = "light-blue"
     )
   })
 
@@ -340,7 +340,7 @@ shinyServer(function(input, output, session) {
 
     p <- if ("mean_age" %in% input$moderators) {
        p <- ggplot(mod_data(), aes_string(x = "mean_age", y = es(), color = mod_group())) +
-        geom_point(aes(size = n, text = paste(expt_unique), alpha=0.5)) +
+        geom_point(aes(size = n, text = paste(expt_unique), alpha=0.5)) + #remove pastee
         geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
         scale_colour_solarized(name = "", labels = labels, guide = guide) +
         scale_size_continuous(guide = FALSE) +
@@ -446,15 +446,14 @@ shinyServer(function(input, output, session) {
              effects.cih = effects +
                qnorm(alpha / 2, lower.tail = FALSE) * sqrt(variances),
              estimate = as.numeric(f),
-             short_cite = names(f),
+             expt_unique = names(f), #CHANGED (ADDED)
              estimate.cil = p$ci.lb,
              estimate.cih = p$ci.ub,
              inverse_vars = 1/variances,
              identity = 1) %>%
-      left_join(mutate(mod_data(), short_cite = make.unique(short_cite))) %>%
+      left_join(mutate(mod_data(), expt_unique = expt_unique)) %>%
       arrange_(.dots = list(sprintf("desc(%s)", input$forest_sort),
-                            "desc(effects)")) %>%
-      mutate(short_cite = factor(short_cite, levels = short_cite))
+                            "desc(effects)"))
 
     labels <- if (mod_group() == "all_mod") NULL else
       setNames(paste(mod_data()[[mod_group()]], "  "),
@@ -462,11 +461,11 @@ shinyServer(function(input, output, session) {
     guide <- if (mod_group() == "all_mod") FALSE else "legend"
 
     plt <- ggplot(data = forest_data) +
-      geom_point(aes(x = short_cite, y = effects, size = inverse_vars, text = expt_unique)) +
-      geom_linerange(aes(x = short_cite, y = effects, ymin = effects.cil, ymax = effects.cih)) +
-      geom_point(aes_string(x = "short_cite", y = "estimate", colour = mod_group()),
+      geom_point(aes(x = expt_unique, y = effects, size = inverse_vars, text = expt_unique)) + #CHANGED TO EXPT_UNIQUE EVERYWHERE
+      geom_linerange(aes(x = expt_unique, y = effects, ymin = effects.cil, ymax = effects.cih)) +
+      geom_point(aes_string(x = "expt_unique", y = "estimate", colour = mod_group()),
                  shape = 17) +
-      geom_linerange(aes_string(x = "short_cite", y = "estimate", ymin = "estimate.cil",
+      geom_linerange(aes_string(x = "expt_unique", y = "estimate", ymin = "estimate.cil",
                                 ymax = "estimate.cih", colour = mod_group(), alpha = 0.7)) +
       geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
       coord_flip() +
@@ -477,7 +476,7 @@ shinyServer(function(input, output, session) {
 
     # ggplotly(plt, tooltip = c("text")) %>%
     #   layout(showlegend = FALSE)
-    plt <- ggplotly(plt, tooltip = c("text"))
+    plt <- ggplotly(plt, tooltip = c("text"), height = nrow(mod_data()) * 15 + 100)
 
     if (mod_group() != "all_mod") {
       plt
@@ -487,6 +486,10 @@ shinyServer(function(input, output, session) {
     }
 
   }
+
+  output$forest <- renderPlotly({
+    forest()
+  })
 
   # INTERCEPT MODEL
   forest_summary <- function() {
@@ -521,10 +524,6 @@ shinyServer(function(input, output, session) {
       geom_hline(yintercept = 0, linetype = "dashed", color = "grey")
   }
 
-  output$forest <- renderPlotly({
-    session$sendCustomMessage(type = "heightCallback", paste0(nrow(mod_data()) * 12 + 100, "px"))
-    forest()
-  })
 
   ## This is the rendering function for the meta-analytic model summery of the effect size
   output$forest_summary <- renderPlot(forest_summary(), height = 200)
@@ -567,10 +566,6 @@ shinyServer(function(input, output, session) {
       geom_hline(yintercept = 0, linetype = "dashed", color = "grey")
   }
 
-  output$forest <- renderPlotly({
-    session$sendCustomMessage(type = "heightCallback", paste0(nrow(mod_data()) * 12 + 100, "px"))
-    forest()
-  })
 
   ## This is the rendering function for the meta-analytic model summery of the effect size
   output$forest_no_intercept_summary <- renderPlot(forest_no_intercept_summary(), height = 200)
@@ -741,14 +736,14 @@ shinyServer(function(input, output, session) {
                                    content = HTML("<small>Method to sort results</small>"),
                                    placement = "right")
                        )),
-              plotlyOutput("forest"),
+              plotlyOutput("forest", height = "auto"),
               # ggplotly hack - renderPlotly does not take height param; must alter in UI
-              tags$script('
-                  Shiny.addCustomMessageHandler("heightCallback",
-                    function(height) {
-                      document.getElementById("forest").style.height = height;
-                    });
-                '),
+              # tags$script('
+              #     Shiny.addCustomMessageHandler("heightCallback",
+              #       function(height) {
+              #         document.getElementById("forest").style.height = height;
+              #       });
+              #   '),
               #tags$style(type="text/css", "#forest { float:right;}"),
               br(),
               helpText("Estimated results and their confidence intervals in a particular order.
