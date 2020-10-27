@@ -126,7 +126,7 @@ shinyUI(
           width = 6,
           fluidRow(
             uiOutput("viz_boxes")),
-          uiOutput("experiment_limit_right")
+          uiOutput("experiment_limit_right"),
             # tags$script(HTML(
             #   "function myFunction() {
             #      var x = document.getElementById('forest_summary_box');
