@@ -60,21 +60,15 @@
   description:  description of type of task in the experiment
   type:         options
   options:
-      - constrained:
-            fullname: constrained
-            description: constained monologue e.g. reading, repeating
-      - free:
-            fullname: free
-            description: free monologue e.g. description of a picture, scene
-      - spontaneous:
-            fullname: spontaneous
-            description: free monologue e.g. description of a picture, scene
-      - social:
-            fullname: social
-            description: e.g. semi-structured interviews, conversations
+      - constrained_production:
+            fullname: constrained production
+            description: Structured monological tasks, e.g. reading aloud, repeating a sequence of numbers. Thereby, the focus is on the form of the speech production rather than its contents (Parola et al. 2020; Fusaroli et al., 2017).
+      - free_monologial_production:
+            fullname: free monologial production
+            description: Spontaneous monological tasks which are less constrained, e.g. description of a picture of video or narrative tasks. Compared to constrained production, the focus is more on the contents of speech and thereby more challenging (Parola et al. 2020; Fusaroli et al., 2017).
       - social_interaction:
             fullname: social interaction
-            description: e.g. semi-structured interviews, conversations
+            description: Structured and semi-structured interviews or spontaneous conversations. This taks is commonly more difficult compared to constrained production or free monological production, as the cognitive and social load is higher due to the interaction with another person (Parola et al. 2020; Fusaroli et al., 2017).
       - other:
             fullname: other
             description: other options
