@@ -63,8 +63,8 @@
       - constrained_production:
             fullname: constrained production
             description: Structured monological tasks, e.g. reading aloud, repeating a sequence of numbers. Thereby, the focus is on the form of the speech production rather than its contents (Parola et al. 2020; Fusaroli et al., 2017).
-      - free_monologial_production:
-            fullname: free monologial production
+      - free_monological_production:
+            fullname: free monological production
             description: Spontaneous monological tasks which are less constrained, e.g. description of a picture of video or narrative tasks. Compared to constrained production, the focus is more on the contents of speech and thereby more challenging (Parola et al. 2020; Fusaroli et al., 2017).
       - social_interaction:
             fullname: social interaction
