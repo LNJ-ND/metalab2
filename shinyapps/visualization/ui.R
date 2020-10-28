@@ -91,13 +91,12 @@ shinyUI(
                 ),
               ),
 
-              strong("Dataset Description:", style="display:inline"), textOutput("data_description"),
-              br(),
+              #strong("Dataset Description:", style="display:inline"), textOutput("data_description"),
+              #br(),
+              uiOutput("link_to_dataset"),
               br(),
               strong("Dataset Citation:", style="display:inline"), textOutput("data_citation"),
               br(),
-              br(),
-              uiOutput("link_to_dataset"),
               br(),
               strong("Statistical Model:", style="display:inline"), uiOutput("ma_model_blurb")
           ),

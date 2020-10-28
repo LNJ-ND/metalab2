@@ -190,18 +190,19 @@ shinyServer(function(input, output, session) {
     short_name <- dataset_info %>%
       filter(name == input$dataset_name) %>%
       select(short_name)
-    HTML(paste0("<i class=\"text-muted\">For more information see
+    HTML(paste0("For references of the feature descriptions see REFERENCES LINK. For more information about effect sizes, moderators and the dataset see
                 <a href='https://langcog.github.io/metalab2/documentation.html#dataset_info' target='_blank'>
                 Documentation</a> or <a href='", base_url, short_name, ".html', target='_blank'>
-                View raw dataset</a>. Please cite the dataset_info that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a></i>"))
-  })
+                View raw dataset</a>. Please cite the dataset that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a>"))
+  #<i class=\"text-muted\">
+    })
 
-    output$data_description <- renderText({
-    req(input$dataset_name)
-    short_desc <- dataset_info %>%
-      filter(name == input$dataset_name) %>%
-      select(short_desc)
-    paste(short_desc)})
+    # output$data_description <- renderText({
+    # req(input$dataset_name)
+    # short_desc <- dataset_info %>%
+    #   filter(name == input$dataset_name) %>%
+    #   select(short_desc)
+    # paste(short_desc)})
 
    output$data_citation <- renderText({
      req(input$dataset_name)
@@ -257,9 +258,32 @@ shinyServer(function(input, output, session) {
 
   output$feature_help_text <- renderUI({
     req(input$feature_option)
-    feature_help_texts <- c("pitch_f0" = "Mean pitch",
-                       "speech_duration" = "Mean speech duration / or total?",
-                       "pause_duration" = "Pause dur")
+    feature_help_texts <- c(
+        "speech_duration" = "Duration of speech (referring to e.g. syllables, lexical items (words) or full utterances)",
+        "speech_rate" = "Speed of speech, measured as syllables or words over time (in minutes or seconds)",
+        "speech_percentage" = "Percentage of spoken time (i.e. non-pause time)",
+        "pause_duration" = "Mean pause duration",
+        "pause_number" = "Number of pauses, as defined by the single study",
+        "pause_length" = "Total length of pauses (in ms or s)",
+        "pause_total_length" = "Total length of pauses (in ms or s)",
+        "response_latency" = "Time passing between a stimulus and the initiation of speech by the subject",
+        "pause_variability" = "Dispersion of pause duration, measured in variance or standard deviation",
+        "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0",
+        "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
+        "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
+        "pitch_bandwidth" = "Formant bandwidth",
+        "pitch_range" = "Difference between the lowest and highest value of pitch",
+        "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
+        "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
+        "f3" = "The 3rd spectral peak of the sound spectrum generated in speech",
+        "f4" = "The 4th spectral peak of the sound spectrum generated in speech",
+        "f5" = "The 5th spectral peak of the sound spectrum generated in speech",
+        "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
+        "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
+        "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)",
+        "intensity_variability_entropy" = "Intensity variability Entropy"
+        )
+
     HTML(paste0("<i class=\"text-muted\">", feature_help_texts[input$feature_option], "</i>"))
   })
 
@@ -328,7 +352,7 @@ shinyServer(function(input, output, session) {
   #############################################################################
   # PLOTS
 
-  ########### SCATTER PLOT ###########
+  ########### BOX/SCATTER PLOT ###########
 
   scatter <- function() {
     req(input$scatter_curve)
@@ -357,7 +381,7 @@ shinyServer(function(input, output, session) {
 
     } else {
        ggplot(mod_data(), aes_string(x = mod_group(), y = es(), color = mod_group())) +
-                  geom_point(position = "jitter", aes(size = n, text = paste(expt_unique), alpha=0.5)) +
+                  geom_point(position = "jitter", aes(size = n, text = paste(expt_unique)), alpha=0.5) +
                   geom_boxplot(fill = "white", alpha=0.5) +
                   labs(x = "Task Type", y = "Effect Size") +
                   scale_colour_solarized(name = "", labels = labels, guide = guide) +
