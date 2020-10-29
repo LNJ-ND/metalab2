@@ -48,25 +48,45 @@ fluidRow(
       tags$li(dataset_info$short_desc),
       tags$li(paste("Curator is", dataset_info$curator)),
       tags$li(strong("Search Strategy:"), dataset_info$search_strategy),
-      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no")       
+      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no")
       )
     )
   )
 ```
 
 ```{r echo=FALSE, warning=FALSE}
+# Is called in the chunk below - purpose is to show NAs and not just empty spaces
+
+rowCallback <- c(
+    "function(row, data){",
+    "  for(var i=0; i<data.length; i++){",
+    "    if(data[i] === null){",
+    "      $('td:eq('+i+')', row).html('NA')",
+    "        .css({'color': 'rgb(151,151,151)', 'font-style': 'italic'});",
+    "    }",
+    "  }",
+    "}"  
+  )
+```
+
+
+```{r echo=FALSE, warning=FALSE}
 fluidRow(
+  br(),
   column(width = 12,
     tabBox(width = 12,
-      tabPanel("Data",
+      tabPanel(strong("Data"),
         DT::datatable(
+          class = 'cell-border stripe',
+          height = "auto",
           select(dataset_raw, -long_cite, -dataset, -short_name),
-          fillContainer = TRUE,
+          fillContainer = FALSE,
           width = "100%",
           style = "bootstrap",
           rownames = FALSE,
-          extensions = 'Buttons',
-          options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20, 
+          extensions = c('FixedColumns','Buttons'),
+          options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20,
+                         columnDefs = list(list(width = '200px', targets = c(2, 5, 7, 15))),
             dom = 'Bfrtip', 
             buttons = list(
               'print', 
@@ -76,11 +96,13 @@ fluidRow(
                   list(extend='csv', filename = dataset_info$short_name),
                   list(extend='excel', filename = dataset_info$short_name)),
                 text = 'Download')
-              )
+              ),
+            fixedColumns = list(leftColumns = 2),
+            rowCallback = JS(rowCallback)
             )
         )
       ),
-      tabPanel("Papers",
+      tabPanel(strong("Papers"),
         purrr::map(unique(dataset_raw$long_cite), ~ tagList(p(.)))
       )
     )
