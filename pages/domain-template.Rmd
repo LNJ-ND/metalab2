@@ -4,7 +4,7 @@ params:
   domain_name: !r yaml::yaml.load_file(here::here("metadata", "domains.yaml"))[[1]]$title
 ---
 
-<style>body {background-color: #ecf0f5;}</style>
+<style>body {background-color: #ecf0f5;}</style> 
 
 ```{r child='assets/setup.Rmd'}
 ```
@@ -19,10 +19,11 @@ datasetBox <- function(i, data) {
     width = 12, #status = "danger",
     solidHeader = TRUE,
     fluidRow(class = "data-box",
-      column(width = 3,
-        img(src = paste0("../", data$src), width = "100%", class = "dataset-img")),
-      column(width = 9, class = "dataset-txt",
-        h4(strong(data$name)), p(data$short_desc)))
+      # column(width = 3,
+      #   img(src = paste0("../", data$src), width = "100%", class = "dataset-img")),
+     box(width = 12,
+      column(width = 12, class = "dataset-txt",
+        h4(strong(data$name)), p(data$short_desc))))
   )
 }
 ```
