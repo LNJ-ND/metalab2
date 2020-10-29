@@ -11,9 +11,9 @@ domainBox <- function(i, data_domains, offsets, link) {
       solidHeader = TRUE,
       a(href = link, class = "no-format",
         fluidRow(class = "domain-box",
-          column(width = 4,
-            img(src = data$image, width = "100%", class = "dataset-img")),
-          column(width = 8, class = "dataset-txt",
+          # column(width = 4,
+          #   img(src = data$image, width = "100%", class = "dataset-img")),
+          column(width = 12, class = "dataset-txt", align = "center",
             h4(strong(data$title)), p(data$desc))
           )
         )
@@ -27,8 +27,8 @@ domainBox <- function(i, data_domains, offsets, link) {
 div(class = "text-center",
   fluidRow(
     column(width = 12,
-      #h1("MetaLab", class = "jumbo"),
-      tags$img(src = "images/logo/MetaLab_transparent.png", height = 220, width = 625),
+    h1("MetaVoice", class = "jumbo"),
+      # tags$img(src = "images/logo/MetaLab_transparent.png", height = 220, width = 625),
       p(class = "lead",
             "Interactive tools for community-augmented meta-analysis,", br(),
             "power analysis, and experimental planning in cognitive development research")
@@ -76,7 +76,7 @@ div(
 
 fluidRow(class = "domain-info",
   column(width = 6,
-    map(seq(1, ceiling(length(domains) / 2), 1),
+    map(1, #seq(1, ceiling(length(domains) / 2), 1),
       ~ tagList(
         fluidRow(
           domainBox(., domains, c(2, 0), link = paste0("domain/", domains[[.]][["id"]], ".html"))),
@@ -92,7 +92,7 @@ fluidRow(class = "domain-info",
     ),
   column(
     width = 6,
-    map(seq(ceiling(length(domains) / 2 + 1), length(domains), 1),
+    map(2, #seq(ceiling(length(domains) / 2 + 1), length(domains), 1),
         ~ tagList(
           fluidRow(
             domainBox(., domains, c(0, 2), link = paste0("domain/", domains[[.]][["id"]], ".html"))),
@@ -104,8 +104,27 @@ fluidRow(class = "domain-info",
             )
           )
         )
+    ),
+)
+
+fluidRow(class = "domain-info",
+  column(
+    width = 12,
+    map(3, #seq(ceiling(length(domains) / 2 + 1), length(domains), 1),
+        ~ tagList(
+          fluidRow(
+            domainBox(., domains, c(3, 3), link = paste0("domain/", domains[[.]][["id"]], ".html"))),
+          fluidRow(class = "bottom-part",
+            column(width = 3),
+            column(width = 6, valueBoxes(
+              filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)
+              ),
+            column(width = 3)
+            )
+          )
+        )
     )
-  )
+)
 ```
 
 ```{r, echo=FALSE}

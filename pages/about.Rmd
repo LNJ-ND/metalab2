@@ -34,13 +34,13 @@ renderGroupMembers <- function(memberStatus, peopleSet) {
 tagList(map(names(people), ~renderGroupMembers(., people[[.]])))
 
 fullWidthPanelBox(
-  "Funding",
-  p("Funding for this research was provided by the Berkeley Initiative for Transparency in Social Sciences and the Laura and John Arnold Foundation. We also thank RStudio for their education license of Shiny Server Pro.")
+  "Metalab",
+  p("This website was built on the basis of the code provided by the Metalab team, which can be found on <a href='https://github.com/langcog/metalab2/'> GitHub</a>. Thank you for sharing your code, knowledge and ideas.")
 )
 
 fullWidthPanelBox(
   "Source code",
-  HTML("The source2 for this website can be found <a href='https://github.com/langcog/metalab2/'>on GitHub</a>. The website itself is hosted through GitHub Pages, with the accompanying visualizations hosted on a Shiny server.<br/><br/>Many thanks to <a href='https://deanattali.com/' target='_blank'>AttaliTech Ltd</a> for website redesign.")
+  HTML("The source2 for this website can be found <a href='https://github.com/LNJ-ND/MetaVoice_Website/'>on GitHub</a>. The website itself is hosted through GitHub Pages, with the accompanying visualizations hosted on a Shiny server.")
 )
 ```
 
