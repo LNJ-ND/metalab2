@@ -44,7 +44,7 @@ mv_load_and_validate_dataset <- function(dataset_info) {
   mv_tidy_dataset(dataset_info, dataset_contents, field_info) %>%
     mutate(all_mod = "") %>%
            #mean_age_months = mean_age / avg_month) %>%
-     filter(!is.na(d_calc)) %>%
+     #filter(!is.na(d_calc)) %>% #commented out to keep the NAs in the data (to be downloadable)
      mutate(
        #year = ifelse(
          # test = grepl("submitted", study_ID),
@@ -293,6 +293,8 @@ mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
       d_calc <- t * sqrt((n_1 + n_2) / (n_1 * n_2)) # Lipsey & Wilson, (2001)
     } else if (mv_complete(f)) {
       d_calc <- sqrt(f * (n_1 + n_2) / (n_1 * n_2)) # Lipsey & Wilson, (2001)
+    } else if (mv_incomplete(x_1, x_2, SD_1, SD_2)){ #added
+      d_calc <- NA #added
     }
     if (mv_complete(n_1, n_2, d_calc)) {
       #now that effect size are calculated, effect size variance is calculated
@@ -305,6 +307,8 @@ mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
       #if d and d_var were already reported, use those values
       d_calc <- d
       d_var_calc <- d_var
+    } else if (mv_incomplete(n_1, n_2, d_calc)){ #added
+      d_var_calc <- NA #added
     }
 
   } else if (participant_design == "within_two") {
@@ -447,6 +451,12 @@ mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
 mv_complete <- function(...) {
   args <- list(...)
   !any(unlist(purrr::map(args, ~(is.null(.x) || is.na(.x)))))
+}
+
+#incomplete
+mv_incomplete <- function(...) {
+  args <- list(...)
+  any(unlist(purrr::map(args, ~(is.null(.x) || is.na(.x)))))
 }
 
 #get_metalab_domain_info
