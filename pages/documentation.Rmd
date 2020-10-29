@@ -186,26 +186,30 @@ fields_data <- dplyr::data_frame(field = get_property("field"),
 make_datatable <- function(df) {
     DT::datatable(
       df,
+      class = 'cell-border stripe',
       escape = FALSE,
       width = "100%",
       style = "bootstrap",
       rownames = FALSE,
       extensions = 'Buttons',
-      options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20)
-    )
+      options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20
+    ))
   }
 
 req_table <- make_datatable(fields_data[["TRUE"]])
 opt_table <- make_datatable(fields_data[["FALSE"]])
 drv_table <- make_datatable(fields_derived)
-
+              
 ```
+
 
 ##### Required fields
 `r req_table`
 
+
 ##### Optional fields
 `r opt_table`
+
 
 ##### Derived fields
 `r drv_table`

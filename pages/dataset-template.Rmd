@@ -18,6 +18,18 @@ dataset_raw <- params$dataset_raw
 dataset_info <- params$dataset_info
 ## what is this attempting to do?
 ## dataset_raw <- dataset_raw[colSums(!is.na(dataset_raw)) > 0]
+
+rowCallback <- c(
+    "function(row, data){",
+    "  for(var i=0; i<data.length; i++){",
+    "    if(data[i] === null){",
+    "      $('td:eq('+i+')', row).html('NA')",
+    "        .css({'color': 'rgb(151,151,151)', 'font-style': 'italic'});",
+    "    }",
+    "  }",
+    "}"  
+  )
+
 ```
 
 ```{r echo=FALSE}
@@ -48,44 +60,50 @@ fluidRow(
       tags$li(dataset_info$short_desc),
       tags$li(paste("Curator is", dataset_info$curator)),
       tags$li(strong("Search Strategy:"), dataset_info$search_strategy),
-      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no")       
-      )
-    )
-  )
+      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no"))
+    ))
 ```
 
 ```{r echo=FALSE, warning=FALSE}
 fluidRow(
+  br(), 
   column(width = 12,
     tabBox(width = 12,
-      tabPanel("Data",
+      tabPanel(strong("Data"),
         DT::datatable(
+          class = 'cell-border stripe',
+          height = "auto",
           select(dataset_raw, -long_cite, -dataset, -short_name),
-          fillContainer = TRUE,
+          fillContainer = FALSE,
           width = "100%",
           style = "bootstrap",
           rownames = FALSE,
-          extensions = 'Buttons',
-          options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20, 
-            dom = 'Bfrtip', 
+          extensions = c('Buttons', 'FixedColumns'),
+          options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20,
+                         columnDefs = list(list(width = '200px', targets = c(2,5,7,15))),
+            dom = 'Bfrtip',
             buttons = list(
-              'print', 
+              'print',
               list(
                 extend = 'collection',
                 buttons = list(
                   list(extend='csv', filename = dataset_info$short_name),
                   list(extend='excel', filename = dataset_info$short_name)),
                 text = 'Download')
-              )
-            )
-        )
-      ),
-      tabPanel("Papers",
+              ),
+            fixedColumns = list(leftColumns = 2),
+            rowCallback = JS(rowCallback)
+      )
+    )),
+      tabPanel(strong("Papers"),
         purrr::map(unique(dataset_raw$long_cite), ~ tagList(p(.)))
       )
     )
   )
 )
+
+
+
 ```
 
 ```{r, echo=FALSE}

@@ -9,7 +9,8 @@ knitr::opts_chunk$set(cache = FALSE)
 domains <- get_metavoice_domain_info()
 reports <- get_metavoice_report_info()
 dataset_yaml <- get_metavoice_dataset_info()
-metavoice_data <- get_metavoice_data(dataset_yaml)
+metavoice_data_NA <- get_metavoice_data(dataset_yaml) # metavoice data also with incomplete columns
+metavoice_data <- metavoice_data_NA %>% filter(!is.na(d_calc)) # metavoice data with complete columns
 
 dataset_info <- add_metavoice_summary_info(dataset_yaml, metavoice_data)
 
@@ -62,19 +63,18 @@ seq_along(domains) %>% purrr::map(
 
 
 render_dataset <- function(dataset_info) {
-  if (dataset_info$short_name %in% metalab_data$short_name) {
+  if (dataset_info$short_name %in% metavoice_data$short_name) {
     rmarkdown::render(here("pages", "dataset-template.Rmd"),
                       output_file = paste0(dataset_info$short_name, ".html"),
                       output_dir = here("rendered", "dataset"),
                       params = list(
                         dataset_info = dataset_info,
-                        dataset_raw = metalab_data %>%
+                        dataset_raw = metavoice_data_NA %>% # changeed to be the dataset with also incomplete columns
                           filter(short_name == dataset_info$short_name)),
                       output_format = "html_document")
 
   }
 }
-
 
 # render dataset pages:
 ## tryign to use pmap_dfr for its side-effects , call a function one
@@ -86,14 +86,14 @@ dataset_info %>% purrr::pmap(function(...) {
 })
 
 ## functions to help build and serve the site for local development
-metalab_build <- function(input, output) {
+metavoice_build <- function(input, output) {
   rmarkdown::render(input,
                     output_file = output,
                     output_dir = dirname(output),
                     output_format = "html_document")
 }
 
-metalab_serve_local <- function (dir, script = metalab_build,
+metavoice_serve_local <- function (dir, script = metavoice_build,
                                  method = "rmdv2", in_session = TRUE) {
 
   servr:::dynamic_site(dir, daemon = TRUE, build = function(message) {
@@ -106,4 +106,4 @@ metalab_serve_local <- function (dir, script = metalab_build,
   }, site.dir = "../rendered")
 }
 
-metalab_serve_local(here::here("pages"))
+metavoice_serve_local(here::here("pages"))
