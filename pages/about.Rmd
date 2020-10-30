@@ -9,7 +9,7 @@ menuNavbar()
 people <- yaml::yaml.load_file(here("metadata", "people.yaml"))
 
 renderMemberInfo <- function(memberInfo) {
-  div(class = "box-pad", 
+  div(class = "box-pad",  
     shinydashboard::box(class = "box-content", width = NULL, align = "center", #status = "danger",
       solidHeader = TRUE,
       img(src = memberInfo$image, width = 180, height = 180),
@@ -35,7 +35,8 @@ tagList(map(names(people), ~renderGroupMembers(., people[[.]])))
 
 fullWidthPanelBox(
   "MetaLab",
-  p("This website was buildt on the basis of the code provided by the MetaLab team, which can be found on <a href='https://github.com/langcog/metalab2/'>on GitHub</a>. Thank you for sharing your code, knowledge and ideas.")
+  HTML("This website was built on the basis of the code provided by the MetaLab team, which can be found 
+    <a href='https://github.com/langcog/metalab2'>on GitHub</a>. Thank you for sharing your code, knowledge and ideas.")
 )
 
 fullWidthPanelBox(

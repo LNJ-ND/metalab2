@@ -70,7 +70,7 @@ body .main-container {
 
 .data-box, .domain-box {
   background-color: white;
-  margin: 0px;
+  margin: 0;
 }
 
 .domain-box {
@@ -104,7 +104,7 @@ body .main-container {
 }
 
 .box-content {
-  max-width: 200px;
+  width: 220px;
   padding: 4px;
   margin: 0 5px 5px 20px;
   line-height: 1.42857143;
@@ -188,6 +188,11 @@ div.nav-tabs-custom > .nav-tabs > li.active {
 
 .right-part > div[class^='col'] {
     padding-left: 10px;
+}
+
+.center-part > div[class^='col'] {
+    padding-left: 18px;
+    padding-right: 18px;
 }
 
 
