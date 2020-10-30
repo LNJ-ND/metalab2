@@ -190,6 +190,11 @@ div.nav-tabs-custom > .nav-tabs > li.active {
     padding-left: 10px;
 }
 
+.center-part > div[class^='col'] {
+    padding-right: 18px;
+    padding-left: 18px;
+}
+
 
 .inner > p {
   margin-bottom: 0;
