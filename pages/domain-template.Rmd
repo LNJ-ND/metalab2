@@ -23,7 +23,7 @@ datasetBox <- function(i, data) {
       #   img(src = paste0("../", data$src), width = "100%", class = "dataset-img")),
      box(width = 12,
       column(width = 12, class = "dataset-txt",
-        h4(strong(data$name)), p(data$short_desc))))
+        h4(strong(data$name)), p(data$full_citation))))
   )
 }
 ```

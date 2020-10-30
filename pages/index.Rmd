@@ -2,7 +2,7 @@
 ```
 
 ```{r tools, echo=FALSE}
-domainBox <- function(i, data_domains, offsets, link) {
+domainBox <- function(i, data_domains, offsets, link) { 
   data <- data_domains[[i]] 
   fluidRow(
     if (!offsets[1] == 0) {column(width = offsets[1])},
@@ -10,9 +10,9 @@ domainBox <- function(i, data_domains, offsets, link) {
       width = 12 - sum(offsets), #status = "danger",
       solidHeader = TRUE,
       a(href = link, class = "no-format",
-        fluidRow(class = "domain-box", height = 200,
-          #column(width = 4,
-          #  img(src = data$image, width = "100%", class = "dataset-img")),
+        fluidRow(class = "domain-box", #height = 200,
+          #column(width = 4),
+            #img(src = data$image, width = "100%", class = "dataset-img")),
           column(width = 12, class = "dataset-txt", align = "center",
             h4(strong(data$title)), p(data$desc)) #from yaml
           )
@@ -38,6 +38,7 @@ div(class = "text-center",
 
 # no home tab
 menuNavbar(isIndex = TRUE)
+
 
 div(
   fluidRow(
@@ -75,13 +76,14 @@ div(
   )
 )
 
-fluidRow(class = "domain-info",
+
+fluidRow(class = "domain-info", 
   column(width = 6,
     map(1, #seq(1, ceiling(length(domains) / 4), 1
       ~ tagList(
         fluidRow(
-          domainBox(i = ., data_domains = domains, offset=c(2, 0), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
-        fluidRow(class = "right-part",
+        domainBox(i = ., data_domains = domains, offset=c(2, 0), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
+        fluidRow(class = "left-part",
           column(width = 2),
           column(width = 10,
             valueBoxes(
@@ -96,7 +98,7 @@ fluidRow(class = "domain-info",
         ~ tagList(
           fluidRow(
             domainBox(., domains, c(0, 2), link = paste0("domain/", domains[[.]][["id"]], ".html"))), 
-          fluidRow(class = "left-part",
+          fluidRow(class = "right-part",  
             column(width = 10, valueBoxes(
               filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)),
             column(width = 2)
@@ -112,11 +114,11 @@ fluidRow(class = "domain-info2",
         fluidRow(
           domainBox(i = ., data_domains = domains, offset=c(3, 3), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
         fluidRow(class = "center-part",
-          column(width = 3),
-          column(width = 6,
+          column(width = 2),
+          column(width = 5,
             valueBoxes(
               filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter), 
-          column(width = 3)
+          column(width = 2)
             )
           )
         )
