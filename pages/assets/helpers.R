@@ -9,8 +9,8 @@ menuNavbar <- function(relativePath="", isIndex=FALSE) {
         if (!isIndex) {tags$li(a("Home", href = paste0(relativePath, "index.html")))},
         tags$li(a("Analyses", href = paste0(relativePath, "analyses.html"))),
         tags$li(a("Documentation", href = paste0(relativePath, "documentation.html"))),
-        tags$li(a("Tutorials", href = paste0(relativePath, "tutorials.html"))),
         tags$li(a("Publications", href = paste0(relativePath, "publications.html"))),
+        tags$li(a("FAQ", href = paste0(relativePath, "faq.html"))),
         tags$li(a("About", href = paste0(relativePath, "about.html")))
         )
       )

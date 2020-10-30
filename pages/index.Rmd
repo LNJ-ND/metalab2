@@ -107,18 +107,18 @@ fluidRow(class = "domain-info",
         )))
 
 fluidRow(class = "domain-info2",
-  column(width = 3),
+  column(width = 3), 
   column(width = 12,
     map(3, #seq(1, ceiling(length(domains) / 4), 1
       ~ tagList(
         fluidRow(
           domainBox(i = ., data_domains = domains, offset=c(3, 3), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
         fluidRow(class = "center-part",
-          column(width = 2),
-          column(width = 5,
+          column(width = 3),
+          column(width = 6,
             valueBoxes(
               filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter), 
-          column(width = 2)
+          column(width = 3)
             )
           )
         )
