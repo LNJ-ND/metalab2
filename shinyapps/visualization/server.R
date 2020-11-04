@@ -268,10 +268,9 @@ shinyServer(function(input, output, session) {
         "pause_total_length" = "Total length of pauses (in ms or s)",
         "response_latency" = "Time passing between a stimulus and the initiation of speech by the subject",
         "pause_variability" = "Dispersion of pause duration, measured in variance or standard deviation",
-        "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0",
+        "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0.",
         "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
         "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
-        "pitch_bandwidth" = "Formant bandwidth",
         "pitch_range" = "Difference between the lowest and highest value of pitch",
         "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
         "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
@@ -279,9 +278,10 @@ shinyServer(function(input, output, session) {
         "f4" = "The 4th spectral peak of the sound spectrum generated in speech",
         "f5" = "The 5th spectral peak of the sound spectrum generated in speech",
         "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
+        "formant_bandwidth" = "No definition available, as feature is underspecified in original paper",
+        "format_amplitude" = "No definition available, as feature is underspecified in original paper",
         "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
-        "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)",
-        "intensity_variability_entropy" = "Intensity variability Entropy"
+        "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)"
         )
 
     HTML(paste0("<i class=\"text-muted\">", feature_help_texts[input$feature_option], "</i>"))
@@ -362,6 +362,8 @@ shinyServer(function(input, output, session) {
 
     guide <- if (mod_group() == "all_mod") FALSE else "legend"
 
+    x_lab <- if(mod_group() == "all_mod") NULL else display_name(mod_group())
+
     p <- if ("mean_age" %in% input$moderators) {
        p <- ggplot(mod_data(), aes_string(x = "mean_age", y = es(), color = mod_group())) +
         geom_point(aes(size = n, text = paste(expt_unique), alpha=0.5)) + #remove pastee
@@ -383,7 +385,7 @@ shinyServer(function(input, output, session) {
        ggplot(mod_data(), aes_string(x = mod_group(), y = es(), color = mod_group())) +
                   geom_point(position = "jitter", aes(size = n, text = paste(expt_unique)), alpha=0.5) +
                   geom_boxplot(fill = "white", alpha=0.5) +
-                  labs(x = "Task Type", y = "Effect Size") +
+                  labs(x = x_lab, y = "Effect Size") +
                   scale_colour_solarized(name = "", labels = labels, guide = guide) +
                   scale_size_continuous(guide = FALSE)
     }
@@ -416,6 +418,8 @@ shinyServer(function(input, output, session) {
     }
 
   }
+
+  ?layout()
 
   output$scatter <- renderPlotly(scatter())
 
