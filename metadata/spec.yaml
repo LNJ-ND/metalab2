@@ -95,28 +95,28 @@
 - field:        group_name_1
   description:  name of participant group
   type:         string
-  format:       maps onto n_1, n_1_M, n_1_F, mean_age_1, x_1, SD_1
+  format:       maps onto n_1, x_1, SD_1, etc.
   example:      SZ; HC
   required:     yes
 
 - field:        group_name_2
   description:  name of participant group
   type:         string
-  format:       maps onto n_2, n_2_M, n_2_F, mean_age_2, x_2, SD_2
+  format:       maps onto n_2, x_2, SD_2, etc.
   example:      SZ; HC
   required:     yes
 
 - field:        n_1
   description:  number of participants in group
   type:         numeric
-  format:       maps onto group_name_1, n_1_M, n_1_F, mean_age_1, x_1, SD_1
+  format:       maps onto group_name_1, x_1, SD_1, etc.
   example:      16
   required:     yes
 
 - field:        n_2
   description:  number of participants in group
   type:         numeric
-  format:       maps onto group_name_2, n_2_M, n_2_F, mean_age_2, x_2, SD_2
+  format:       maps onto group_name_2, x_2, SD_2, etc.
   example:      16
   required:     yes
 
@@ -137,28 +137,28 @@
 - field:        x_1
   description:  mean of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_1, n_1, mean_age_1, SD_1
+  format:       maps onto group_name_1, n_1, SD_1, etc.
   example:      8.56
   required:     yes
 
 - field:        x_2
   description:  mean of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_2, n_2, mean_age_2, SD_2
+  format:       maps onto group_name_2, n_2, SD_2, etc.
   example:      9.03
   required:     yes
 
 - field:        SD_1
   description:  standard deviation of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_1, n_1, mean_age_1, x_1
+  format:       maps onto group_name_1, n_1, x_1, etc.
   example:      0.42
   required:     yes
 
 - field:        SD_2
   description:  standard deviation of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_2, n_2, mean_age_2, x_2
+  format:       maps onto group_name_2, n_2, x_2, etc.
   example:      0.38
   required:     yes
 
