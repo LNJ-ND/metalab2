@@ -32,6 +32,7 @@
       - "yes"
       - "no"
       - "NA" #remove later?
+  example:      yes
   nullable:     yes
   required:     yes
 
@@ -72,6 +73,7 @@
       - other:
             fullname: other
             description: other options
+  example:      constrained_production
   required:     yes
 
 - field:        participant_design
@@ -80,40 +82,41 @@
   options:
     - between:  between two groups of participants
     - other:
+  example:      between
   required:     yes
 
 - field:        native_language
   description:  participants' native language(s)
   type:         string
-  format:       languages separated by commas
-  example:      American English; French, Italian
+  format:       language starting with capital letter
+  example:      English
   required:     yes
 
 - field:        group_name_1
   description:  name of participant group
   type:         string
-  format:       maps onto n_1, n_1_M, n_1_F, mean_age_1, x_1, SD_1
+  format:       maps onto n_1, x_1, SD_1, etc.
   example:      SZ; HC
   required:     yes
 
 - field:        group_name_2
   description:  name of participant group
   type:         string
-  format:       maps onto n_2, n_2_M, n_2_F, mean_age_2, x_2, SD_2
+  format:       maps onto n_2, x_2, SD_2, etc.
   example:      SZ; HC
   required:     yes
 
 - field:        n_1
   description:  number of participants in group
   type:         numeric
-  format:       maps onto group_name_1, n_1_M, n_1_F, mean_age_1, x_1, SD_1
+  format:       maps onto group_name_1, x_1, SD_1, etc.
   example:      16
   required:     yes
 
 - field:        n_2
   description:  number of participants in group
   type:         numeric
-  format:       maps onto group_name_2, n_2_M, n_2_F, mean_age_2, x_2, SD_2
+  format:       maps onto group_name_2, x_2, SD_2, etc.
   example:      16
   required:     yes
 
@@ -134,28 +137,28 @@
 - field:        x_1
   description:  mean of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_1, n_1, mean_age_1, SD_1
+  format:       maps onto group_name_1, n_1, SD_1, etc.
   example:      8.56
   required:     yes
 
 - field:        x_2
   description:  mean of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_2, n_2, mean_age_2, SD_2
+  format:       maps onto group_name_2, n_2, SD_2, etc.
   example:      9.03
   required:     yes
 
 - field:        SD_1
   description:  standard deviation of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_1, n_1, mean_age_1, x_1
+  format:       maps onto group_name_1, n_1, x_1, etc.
   example:      0.42
   required:     yes
 
 - field:        SD_2
   description:  standard deviation of feature/dependent variable for group
   type:         numeric
-  format:       maps onto group_name_2, n_2, mean_age_2, x_2
+  format:       maps onto group_name_2, n_2, x_2, etc.
   example:      0.38
   required:     yes
 
@@ -209,118 +212,133 @@
 - field:        mean_age_1
   description:  mean age of participants in group 1 in years
   type:         numeric
-  format:       maps onto group_name_1, n_1, x_1, SD_1
+  format:       maps onto group_name_1
   example:      50
   required:     no
 
 - field:        mean_age_2
   description:  mean age of participants in group 2 in years
   type:         numeric
-  format:       maps onto group_name_2, n_2, x_2, SD_2
+  format:       maps onto group_name_2
   example:      50
   required:     no
 
 - field:        sd_age_1
   description:  sd of age of participants in group 1 in years
   type:         numeric
-  format:       maps onto group_name_1, n_1, x_1, SD_1
+  format:       maps onto group_name_1
   example:      10
   required:     no
 
 - field:        sd_age_2
   description:  sd of age of participants in group 2 in years
   type:         numeric
-  format:       maps onto group_name_2, n_2, x_2, SD_2
+  format:       maps onto group_name_2
   example:      10
   required:     no
 
 - field:        mean_education_1
   description:  mean education score for group 1
   type:         numeric
+  format:       maps onto group_name_1
   example:      10.4
   required:     no
 
 - field:        mean_education_2
   description:  mean education score for group 2
   type:         numeric
+  format:       maps onto group_name_2
   example:      10.4
   required:     no
 
 - field:        sd_education_1
   description:  sd education score for group 1
   type:         numeric
+  format:       maps onto group_name_1
   example:      2
   required:     no
 
 - field:        sd_education_2
   description:  sd education score for group 2
   type:         numeric
+  format:       maps onto group_name_2
   example:      2
   required:     no
 
 - field:        mean_total_task_duration_1
   description:  mean of total task duration for group 1
   type:         numeric
+  format:       maps onto group_name_1
   example:      250
   required:     no
 
 - field:        mean_total_task_duration_2
   description:  mean of total task duration for group 2
   type:         numeric
+  format:       maps onto group_name_2
   example:      250
   required:     no
 
 - field:        sd_total_task_duration_1
   description:  sd of total task duration for group 1
   type:         numeric
+  format:       maps onto group_name_1
   example:      10
   required:     no
 
 - field:        sd_total_task_duration_2
   description:  sd of total task duration for group 2
   type:         numeric
+  format:       maps onto group_name_2
   example:      10
   required:     no
 
 - field:        task_type_specification
-  description:  further specification of the task, i.e specification of task_type
+  description:  further specification of the task
   type:         string
+  format:       specification of task_type
   example:      imitation
   required:     no
 
 - field:        native_language_specification
-  description:  further specification of the native language of participants, i.e. specification of native_lang
+  description:  further specification of the native language of participants, i.e. specification of native_language
   type:         string
+  format:       if different from native_language, then specify. Otherwise repeat what is in native_language.
   example:      American English, British English
   required:     no
 
 - field:        diagnosis_specification
-  description:  further specification of group_1 (patients) in experiment
+  description:  further specification of group 1 (patients) in experiment
   type:         string
+  format:       specification of diagnoses within group 1
   example:      ASD, HFA
   required:     no
 
 - field:        feature_specification
   description:  further specification of feature measured in experiment
   type:         string
+  format:       feature specification with words separated by underscores
   example:      syllable_duration, utterance_duration
   required:     no
 
 - field:        prosody_type
   description:  type of prosody
   type:         string
+  format:       specification of prosody type
   example:      emotional, linguistic
   required:     no
 
 - field:        notes
   description:  additional notes
   type:         string
+  format:       can be written in prose, note format, etc.
   example:      paper does not report error bars
   required:     no
 
 - field:        doi
   description:  direct doi to the paper of the study
   type:         string
+  format:       doi in link format
   example:      https://doi.org/10.1016/0093-934X(87)90105-2
   required:     no
 
