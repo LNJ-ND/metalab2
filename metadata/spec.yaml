@@ -8,21 +8,21 @@
   description:  uniquely identifies a study
   type:         string
   format:       last name of first author, year, and letter if necessary
-  example:      smith2015a
+  example:      Quigley2016
   required:     yes
 
 - field:        short_cite
   description:  short citation
   type:         string
   format:       author (year) APA-style citation
-  example:      Smith (2015)
+  example:      Quigley et al. (2016)
   required:     yes
 
 - field:        long_cite
   description:  long citation
   type:         string
   format:       full APA-style citation
-  example:
+  example:      Quigley, J., McNally, S., & Lawson, S. (2016). Prosodic patterns in interaction of low-risk and at-risk-of-autism spectrum disorders infants and their mothers at 12 and 18 months. Language Learning and Development, 12, 295–310.
   required:     yes
 
 - field:        peer_reviewed
@@ -46,7 +46,7 @@
   description:  if a study included multiple experiments with different populations, or with different tasks the experiments will get a unique identifier.
   type:         string
   format:       if same study has more than one experiment the first experiment will have the short_cite as identifier and the second experiment the shortcite and a number.
-  example:      Smith (2015).1
+  example:      Quigley et al. (2016).1
   required:     yes
 
 - field:        same_sample
@@ -56,7 +56,7 @@
   example:      A, B, C, AA
   required:     yes
 
-- field:       task_type
+- field:        task_type
   description:  description of type of task in the experiment
   type:         options
   options:
@@ -78,7 +78,7 @@
   description:  indicates the groups that are the comparison of interest for effect size
   type:         options
   options:
-    - between:    between two groups of participants
+    - between:  between two groups of participants
     - other:
   required:     yes
 
@@ -179,107 +179,107 @@
   required:     no
 
 - field:        n_1_M
-  description:  number of male participants in group
+  description:  number of male participants in group 1
   type:         numeric
   format:       maps onto group_name_1
   example:      16
   required:     no
 
 - field:        n_2_M
-  description:  number of male participants in group
+  description:  number of male participants in group 2
   type:         numeric
   format:       maps onto group_name_2
   example:      16
   required:     no
 
 - field:        n_1_F
-  description:  number of female participants in group
+  description:  number of female participants in group 1
   type:         numeric
   format:       maps onto group_name_1
   example:      16
   required:     no
 
 - field:        n_2_F
-  description:  number of female participants in group
+  description:  number of female participants in group 2
   type:         numeric
   format:       maps onto group_name_2
   example:      16
   required:     no
 
 - field:        mean_age_1
-  description:  mean age of participants in group in years
+  description:  mean age of participants in group 1 in years
   type:         numeric
   format:       maps onto group_name_1, n_1, x_1, SD_1
   example:      50
   required:     no
 
 - field:        mean_age_2
-  description:  mean age of participants in group in years
+  description:  mean age of participants in group 2 in years
   type:         numeric
   format:       maps onto group_name_2, n_2, x_2, SD_2
   example:      50
   required:     no
 
 - field:        sd_age_1
-  description:  sd of age of participants in group in years
+  description:  sd of age of participants in group 1 in years
   type:         numeric
   format:       maps onto group_name_1, n_1, x_1, SD_1
   example:      10
   required:     no
 
 - field:        sd_age_2
-  description:  sd of age of participants in group in years
+  description:  sd of age of participants in group 2 in years
   type:         numeric
   format:       maps onto group_name_2, n_2, x_2, SD_2
   example:      10
   required:     no
 
 - field:        mean_education_1
-  description:  mean education score for group
+  description:  mean education score for group 1
   type:         numeric
-  example: 15
+  example:      10.4
   required:     no
 
 - field:        mean_education_2
-  description:  mean education score for group
+  description:  mean education score for group 2
   type:         numeric
-  example: 15
+  example:      10.4
   required:     no
 
 - field:        sd_education_1
-  description:  sd education score for group
+  description:  sd education score for group 1
   type:         numeric
-  example: 2
+  example:      2
   required:     no
 
 - field:        sd_education_2
-  description:  sd education score for group
+  description:  sd education score for group 2
   type:         numeric
-  example: 2
+  example:      2
   required:     no
 
 - field:        mean_total_task_duration_1
-  description:  mean of total task duration for group in xx?
+  description:  mean of total task duration for group 1
   type:         numeric
-  example: 250
+  example:      250
   required:     no
 
 - field:        mean_total_task_duration_2
-  description:  mean of total task duration for group in xx?
+  description:  mean of total task duration for group 2
   type:         numeric
-  example: 250
+  example:      250
   required:     no
 
 - field:        sd_total_task_duration_1
-  description:  sd of total task duration for group in xx?
+  description:  sd of total task duration for group 1
   type:         numeric
-  example: 10
+  example:      10
   required:     no
 
 - field:        sd_total_task_duration_2
-  description:  sd of total task duration for group in xx?
+  description:  sd of total task duration for group 2
   type:         numeric
-  example: 10
+  example:      10
   required:     no
 
 - field:        task_type_specification
@@ -316,6 +316,12 @@
   description:  additional notes
   type:         string
   example:      paper does not report error bars
+  required:     no
+
+- field:        doi
+  description:  direct doi to the paper of the study
+  type:         string
+  example:      https://doi.org/10.1016/0093-934X(87)90105-2
   required:     no
 
 
