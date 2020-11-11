@@ -362,7 +362,7 @@ shinyServer(function(input, output, session) {
 
     guide <- if (mod_group() == "all_mod") FALSE else "legend"
 
-    x_lab <- if(mod_group() == "all_mod") NULL else display_name(mod_group())
+    x_lab <- if (mod_group() == "all_mod") NULL else display_name(mod_group())
 
     p <- if ("mean_age" %in% input$moderators) {
        p <- ggplot(mod_data(), aes_string(x = "mean_age", y = es(), color = mod_group())) +
@@ -385,6 +385,7 @@ shinyServer(function(input, output, session) {
        ggplot(mod_data(), aes_string(x = mod_group(), y = es(), color = mod_group())) +
                   geom_point(position = "jitter", aes(size = n, text = paste(expt_unique)), alpha=0.5) +
                   geom_boxplot(fill = "white", alpha=0.5) +
+                  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") + #ADDED LINE
                   labs(x = x_lab, y = "Effect Size") +
                   scale_colour_solarized(name = "", labels = labels, guide = guide) +
                   scale_size_continuous(guide = FALSE)
