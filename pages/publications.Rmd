@@ -7,11 +7,31 @@ pagetitle: publications
 
 ```{r echo=FALSE}
 menuNavbar()
+
+#<div style="margin-left:200px; margin-right:200px; margin-top:30px; font-size:16px">
+
+# </div>
+# 
+# <!--- "section" is ID of div containing tabs below -->
+# <style>
+# #section {
+#   margin-left:200px;
+#   margin-right:200px;
+#   font-size:16px;
+# }
+# </style>
+# 
+# ## {.tabset .nav-tabs-custom}
+
 ```
 
-<div style="margin-left:200px; margin-right:200px; margin-top:30px; font-size:16px">
+<div style="margin-left:100px; margin-right:100px; margin-top:10px;">
 
-## Publications 
+# Publications
+
+## {.tabset .nav-tabs-custom}
+
+### Using MetaVoice Data
 
 Researchers are allowed to use data available on the MetaVoice website. This can be in the form of citing meta-analytic results, or downloading dataset and conducting custom analyses. In both cases our citation policy is the following:
 
@@ -25,27 +45,31 @@ Researchers are allowed to use data available on the MetaVoice website. This can
 
 4. Since the MetaVoice site is continuously updated, we recommend that you list the date of download for your data in your manuscript. For example: "We analyze all data currently in MetaVoice (REFERENCE). Data were downloaded on 2020-11-01."
 
-</div>
+### Publications on MetaVoice
 
-<!--- "section" is ID of div containing tabs below -->
-<style>
-#section {
-  margin-left:200px;
-  margin-right:200px;
-  font-size:16px;
-}
-</style>
 
-## {.tabset .nav-tabs-custom}
+### Publications using MetaVoice
 
-### Publications on MetaLab
 
-Bergmann, C., Tsuji, S., Piccinini, P.E., Lewis, M.L., Braginsky, M., Frank, M.C., & Cristia, A. (2018). Promoting replicability in developmental research through meta-analyses: Insights from language acquisition research. *Child Development, 89*, 1996-2009 . DOI: 10.1111/cdev.13079 [[Repository]](https://osf.io/uhv3d/)
+### Publications used for MetaVoice
 
-Lewis, M. L., Braginsky, M., Tsuji, S., Bergmann, C., Piccinini, P. E., Cristia, A., & Frank, M. C. (2017/under review). A Quantitative Synthesis of Early Language Acquisition Using Meta-Analysis. DOI: 10.17605/OSF.IO/HTSJM [[Preprint]](http://psyarxiv.com/htsjm) 
+#### MetaLab
 
-### Publications using MetaLab
+This MetaVoice Website has been developed using the idea, code and structure of MetaLab. 
 
-Tsuji, S. & Cristia, A. (2017). Which Acoustic and Phonological Factors Shape Infants’ Vowel Discrimination? Exploiting Natural Variation in InPhonDB. In: *Proceedings of Interspeech 2017*, pp. 2108-2112. DOI: 10.21437/Interspeech.2017-1468 [[Paper]](http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1468.html)
+- Bergmann, C., Tsuji, S., Piccinini, P.E., Lewis, M.L., Braginsky, M., Frank, M.C., & Cristia, A. (2018). Promoting replicability in developmental research through meta-analyses: Insights from language acquisition research. *Child Development, 89*, 1996-2009 . DOI: 10.1111/cdev.13079 [[Repository]](https://osf.io/uhv3d/)
+- Lewis, M. L., Braginsky, M., Tsuji, S., Bergmann, C., Piccinini, P. E., Cristia, A., & Frank, M. C. (2017/under review). A Quantitative Synthesis of Early Language Acquisition Using Meta-Analysis. DOI: 10.17605/OSF.IO/HTSJM [[Preprint]](http://psyarxiv.com/htsjm) 
 
-Bergmann, C. Tsuji, S., & Cristia, A. (2017). Top-down versus bottom-up theories of phonological acquisition: A big data approach. In: *Proceedings of Interspeech 2017*, pp. 2013–2016. DOI: 10.21437/Interspeech.2017-1443 [[Paper]](http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1443.html)
+#### Feature Descriptions
+
+The feature descriptions used on the visualisations tool have been created based using the following papers:
+
+- Fusaroli, R., Lambrechts, A., Bang, D., Bowler, D. M., & Gaigg, S. B. (2017). Is voice a marker for Autism spectrum disorder? A systematic review and meta‐analysis. Autism Research, 10(3), 384-407.
+- Low, D. M., Bentley, K. H., & Ghosh, S. S. (2020). Automated assessment of psychiatric disorders using speech: A systematic review. Laryngoscope Investigative Otolaryngology, 5(1), 96-116.
+- Mandal, M. K., Srivastava, P., & Singh, S. K. (1990). Paralinguistic characteristics of speech in schizophrenics and depressives. Journal of psychiatric research, 24(2), 191-196
+- Wolfe, J. (2020). Formant: what is a formant?. Retrieved 9 November 2020, from http://newt.phys.unsw.edu.au/jw/formant.html
+- Wood, S. (2005). What are formants?. Retrieved 9 November 2020, from https://person2.sol.lu.se/SidneyWood/praate/whatform.html
+
+
+
+

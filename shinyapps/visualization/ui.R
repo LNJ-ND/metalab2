@@ -104,21 +104,20 @@ shinyUI(
                 fluidRow(
                   column(
                     width = 10,
-                    p(strong("Box plot"), "of effect sizes"))
-                  ),
-                fluidRow(column(
-                  width = 7,
-                  ## uiOutput("select_scatter_curve"),
-                  selectInput("scatter_curve", label = "Curve type",
-                              choices = scatter_choices, selected = "loess")),
-                  bsPopover("scatter_curve", title = NULL,
-                            content = HTML("<small>Select a type of curve</small>"),
-                            placement = "right")),
+                    p(strong("Box plot"), "of effect sizes"))),
+                conditionalPanel(condition = "input.moderators == 'mean_age'", #ADDED CONDITIONAL PANEL
+                  fluidRow(column(
+                    width = 7,
+                    ## uiOutput("select_scatter_curve"),
+                    selectInput("scatter_curve", label = "Curve type",
+                                choices = scatter_choices, selected = "loess")),
+                    bsPopover("scatter_curve", title = NULL,
+                              content = HTML("<small>Select a type of curve</small>"),
+                              placement = "right"))),
                 plotlyOutput("scatter"),
                 br(),
-                helpText("Select a type of regression line. Dot sizes are inversely related
-                         to the standard error of effect size."),
-                height = 600),
+                helpText("Dot sizes are inversely related to the standard error of effect size."),
+                height = "auto"), #600 CHANGED TO AUTO
           uiOutput("experiment_limit_left")
           ),
         column(
