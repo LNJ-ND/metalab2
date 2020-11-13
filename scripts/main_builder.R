@@ -40,14 +40,14 @@ if (!dir.exists(render_dir)) {
 file.copy(here("pages/images"), here("rendered"), recursive = TRUE)
 
 ## render reports
-reports %>% purrr::map(
-  ~ rmarkdown::render(here("pages", "report.Rmd"),
-                      output_file = paste0(.$id, "-outer.html"),
-                      output_dir = here("rendered", "reports"),
-                      params = list(report = .),
-                      output_format = "html_document"
-                      )
-)
+# reports %>% purrr::map(
+#   ~ rmarkdown::render(here("pages", "report.Rmd"),
+#                       output_file = paste0(.$id, "-outer.html"),
+#                       output_dir = here("rendered", "reports"),
+#                       params = list(report = .),
+#                       output_format = "html_document"
+#                       )
+# )
 
 # render domain pages:
 domain_ids <- purrr::map(domains, "id") %>% unlist()
