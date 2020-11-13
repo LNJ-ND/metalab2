@@ -1,6 +1,6 @@
 ---
 params:
-  dataset: !r data.frame(name=character(2), short_name=character(2), num_papers=integer(2), num_experiments=integer(2), num_subjects=integer(2), stringsAsFactors = FALSE)
+  dataset: !r data.frame(name=character(3), short_name=character(3), num_papers=integer(3), num_experiments=integer(3), num_subjects=integer(3), stringsAsFactors = FALSE)
   domain_name: !r yaml::yaml.load_file(here::here("metadata", "domains.yaml"))[[1]]$title
 ---
 
@@ -11,6 +11,7 @@ params:
 ```{r arrange, echo=FALSE}
 params_dataset <- params$dataset %>% arrange(name)
 ```
+
 ```{r tools, echo=FALSE}
 
 datasetBox <- function(i, data) {
