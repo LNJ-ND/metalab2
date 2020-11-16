@@ -1,10 +1,10 @@
-- id:     developmental_curves
-  title:  Developmental curves
-  
-- id:     hierarchicalrandomeffect
-  title:  Hierarchical random effects
+# - id:     developmental_curves
+#   title:  Developmental curves
+#
+# - id:     hierarchicalrandomeffect
+#   title:  Hierarchical random effects
+#
+# - id:     method_choice
+#   title:  Method selection
+#
 
-- id:     method_choice
-  title:  Method selection
-  
-  

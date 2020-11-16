@@ -1,4 +1,5 @@
 ---
+pagetitle: dataset-template
 params:
   dataset_info: !r NULL
   dataset_raw: !r NULL

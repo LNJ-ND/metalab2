@@ -1,10 +1,14 @@
+---
+pagetitle: index
+---
+
 ```{r child='assets/setup.Rmd'}
 ```
 
 ```{r tools, echo=FALSE}
-domainBox <- function(i, data_domains, offsets, link) { 
+domainBox <- function(i, data_domains, offsets, link) {
   data <- data_domains[[i]] 
-  fluidRow(
+  fluidRow(  
     if (!offsets[1] == 0) {column(width = offsets[1])},
     box(
       width = 12 - sum(offsets), #status = "danger",
@@ -13,29 +17,30 @@ domainBox <- function(i, data_domains, offsets, link) {
         fluidRow(class = "domain-box", #height = 200,
           #column(width = 4),
             #img(src = data$image, width = "100%", class = "dataset-img")),
-          column(width = 12, class = "dataset-txt", align = "center",
-            h4(strong(data$title)), p(data$desc)) #from yaml
+          column(width = 12, class = "dataset-txt", align = "center", #class = "dataset-text"
+            br(), h4((data$title)), br()) #from yaml 
           )
-        )
-      ),
+        ) 
+      ),   
     if (!offsets[2] == 0) {column(width = offsets[2])}
     )
 }
 ```
 
 ```{r header, echo=FALSE, warning=FALSE}
+
 div(class = "text-center",
   fluidRow(
     column(width = 12,
-      h1("MetaVoice", class = "jumbo"),
-      #tags$img(src = "images/logo/MetaLab_transparent.png", height = 220, width = 625),
+      #h1("MetaVoice", class = "jumbo"),
+      tags$img(src = "images/logo/mv_logo.png", height = 100, width = 400),
       p(class = "lead",
             "Interactive tools for community-augmented meta-analysis,", br(),
             "power analysis, and experimental planning for voice patterns in neuropsychiatric disorders")
       )
     )
   )
-
+  
 # no home tab
 menuNavbar(isIndex = TRUE)
 
@@ -45,19 +50,19 @@ div(
     column(width = 1),
     column(width = 3,
       tags$a(href = paste0("app.html?id=", "visualization"),
-        div(class = "thumbnail",
-          tags$img(src = "images/apps/visualization-wide.png"),
-          div(class = "caption",
-            h4("Meta-analytic Visualizations")
-          )
+          div(class = "thumbnail",
+          tags$img(src = "images/apps/mv_visualisation.png"),
+          div(class = "caption", align = "center",
+            h4("Meta-Analytic Visualisations")
+            )
         )
       )
     ),
     column(width = 3,
       tags$a(href = paste0("app.html?id=", "power_analysis"),
         div(class = "thumbnail",
-          tags$img(src = "images/apps/power_analysis-wide.png"),
-          div(class = "caption",
+          tags$img(src = "images/apps/mv_power_analysis.png"),
+          div(class = "caption", align = "center",   
             h4("Power Analysis")
           )
         )
@@ -66,7 +71,7 @@ div(
     column(width = 4, class = "content-info",
       "You can explore the data with", 
       tags$a(href = "analyses.html", "interactive visualization tools."), 
-      br(),
+      br(),  
       br(),
       "Learn how to ",
       tags$a(href = "/documentation.html", "contribute,"),

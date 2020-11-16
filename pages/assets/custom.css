@@ -1,8 +1,17 @@
 /*@import url(https://fonts.googleapis.com/css?family=Ubuntu);*/
 
 
+:root {
+    --page-background-color: #f0f0f0;
+    --valuebox-color: #3c8dbc;
+    --header-color: #3b3b3b;
+    --header-hover-color: #707070;
+    --panel-color: #3c8dbc;
+    --tab-color:#3c8dbc;
+}
+
 body {
-  background-color: #ecf0f5 !important;
+  background-color: var(--page-background-color) !important;
 }
 
 img {
@@ -24,9 +33,9 @@ body .main-container {
   border-width: 1px 0;
   list-style: none;
   margin: 0 0 20px 0;
-  padding: 0 100px 0 0;
+  padding: 0 0 0 0;
   text-align: right;
-  background-color: #dd4b39;
+  background-color: var(--header-color);
   font-size: 22px;
   font-family: "Ubuntu", sans-serif;
 }
@@ -50,7 +59,7 @@ body .main-container {
 #navb a:hover {
   text-decoration: none;
   color: white;
-  background-color: #d33724;
+  background-color: var(--header-hover-color);
 }
 
 .no-format, a.no-format:hover {
@@ -74,11 +83,11 @@ body .main-container {
 }
 
 .domain-box {
-  border: 1px solid black;
+  border: 1px solid #cccccc;
   padding: 5px;
 }
 .cont-dom {
-  background-color: #ecf0f5;
+  background-color: var(--page-background-color);
 }
 
 .dataset-txt {
@@ -142,7 +151,7 @@ body .main-container {
 }
 
 div.nav-tabs-custom > .nav-tabs > li.active {
-    border-top-color: #dd4b39;
+    border-top-color: var(--tab-color);
 }
 
 .nav-tabs-custom>.nav-tabs>li {
@@ -221,13 +230,13 @@ iframe{
 }
 
 .panel-primary {
-  border-color: #dd4b39;
+  border-color: var(--panel-color);
 }
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color: #dd4b39;
-    border-color: #dd4b39;
+    background-color: var(--panel-color);
+    border-color: var(--panel-color);
 }
 
 .report-well {

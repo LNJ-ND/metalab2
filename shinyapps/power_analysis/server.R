@@ -278,9 +278,31 @@ shinyServer(function(input, output, session) {
 
   output$feature_help_text <- renderUI({
     req(input$feature_option)
-    feature_help_texts <- c("pitch_f0" = "Mean pitch",
-                            "speech_duration" = "Mean speech duration / or total?",
-                            "pause_duration" = "Pause dur")
+    feature_help_texts <- c(
+      "speech_duration" = "Duration of speech (referring to e.g. syllables, lexical items (words) or full utterances)",
+      "speech_rate" = "Speed of speech, measured as syllables or words over time (in minutes or seconds)",
+      "speech_percentage" = "Percentage of spoken time (i.e. non-pause time)",
+      "pause_duration" = "Mean pause duration",
+      "pause_number" = "Number of pauses, as defined by the single study",
+      "pause_length" = "Total length of pauses (in ms or s)",
+      "pause_total_length" = "Total length of pauses (in ms or s)",
+      "response_latency" = "Time passing between a stimulus and the initiation of speech by the subject",
+      "pause_variability" = "Dispersion of pause duration, measured in variance or standard deviation",
+      "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0.",
+      "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
+      "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
+      "pitch_range" = "Difference between the lowest and highest value of pitch",
+      "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
+      "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
+      "f3" = "The 3rd spectral peak of the sound spectrum generated in speech",
+      "f4" = "The 4th spectral peak of the sound spectrum generated in speech",
+      "f5" = "The 5th spectral peak of the sound spectrum generated in speech",
+      "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
+      "formant_bandwidth" = "No definition available, as feature is underspecified in original paper",
+      "format_amplitude" = "No definition available, as feature is underspecified in original paper",
+      "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
+      "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)"
+    )
     HTML(paste0("<i class=\"text-muted\">", feature_help_texts[input$feature_option], "</i>"))
   })
 
@@ -288,25 +310,25 @@ shinyServer(function(input, output, session) {
   ### POWER BOXES
   output$power_d <- renderValueBox({
     valueBox(
-      round(d_pwr(), digits = 2), "Effect Size", icon = icon("record", lib = "glyphicon"),
-      color = "navy"
+      round(d_pwr(), digits = 2), "Effect Size",
+      icon = icon("record", lib = "glyphicon"),
+      color = "light-blue"
     )
   })
 
   output$power_n <- renderValueBox({
     valueBox(
       if(pwr_80() < 200) {round(pwr_80(), digits = 2) } else { "> 200"}, "N for 80% power",
-      tags$i(class = "fas fa-users",
-        style = "color: rgb(54,72,105)"),
-      icon("users"),
-      color = "navy"
+      icon = icon("users", lib = "glyphicon"),
+      color = "light-blue"
     )
   })
 
   output$power_s <- renderValueBox({
     valueBox(
-      nrow(pwrdata()), "Experiments", icon = icon("list", lib = "glyphicon"),
-      color = "navy"
+      nrow(pwrdata()), "Experiments",
+      icon = icon("list", lib = "glyphicon"),
+      color = "light-blue"
     )
     })
 

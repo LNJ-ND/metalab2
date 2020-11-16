@@ -5,7 +5,7 @@ menuNavbar <- function(relativePath="", isIndex=FALSE) {
     column(id = "maxim-width",
       width = 12,
       tags$ul(id = "navb",
-        tags$li(class = "navb-header", a(href = paste0(relativePath, "index.html"), "MetaLab")),
+        tags$li(class = "navb-header", a(href = paste0(relativePath, "index.html"), "MetaVoice")),
         if (!isIndex) {tags$li(a("Home", href = paste0(relativePath, "index.html")))},
         tags$li(a("Analyses", href = paste0(relativePath, "analyses.html"))),
         tags$li(a("Documentation", href = paste0(relativePath, "documentation.html"))),
@@ -28,7 +28,7 @@ valueBoxes <- function(values, descriptions=c("Meta-analyses", "Papers", "Effect
         format(values[.], big.mark = ","),
         descriptions[.],
         width = 3,
-        color = "red",
+        color = "light-blue",
         icon = iconWrap(icons[.]))
       )
     )

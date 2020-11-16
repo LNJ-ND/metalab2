@@ -1,14 +1,14 @@
 Analyses:
 
   - id:    visualization
-    title: Meta-analytic Visualizations
-    image: images/apps/visualization.png
+    title: Meta-Analytic Visualizations
+    image: images/apps/mv_visualisation.png
   - id:    power_analysis
     title: Power Analysis
-    image: images/apps/power_analysis.png
-  - id:    power_simulation
-    title: Power Simulation
-    image: images/apps/power_simulation.png
+    image: images/apps/mv_power_analysis.png
+  # - id:    power_simulation
+  #   title: Power Simulation
+  #   image: images/apps/power_simulation.png
 
 
 
