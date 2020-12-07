@@ -10,7 +10,7 @@ shinyapps <-  yaml::yaml.load_file(here("metadata", "shinyapps.yaml"))
 # Creating JSON shinyapps structure:
 apps_locations_map <- unlist(shinyapps, recursive = F) %>%
   unname() %>%
-  map(~ paste0("'", .$id, "':'", serverAddress, .$id, "/'")) %>%
+  map(~ paste0("'", .$id, "':'", .$url, "'")) %>%
   {do.call("paste", c(., sep = ","))} %>%
   paste("{", ., "}")
 

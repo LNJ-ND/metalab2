@@ -3,9 +3,11 @@ Analyses:
   - id:    visualization
     title: Meta-Analytic Visualizations
     image: images/apps/mv_visualisation.png
+    url: https://nicole-dwenger.shinyapps.io/visualization/
   - id:    power_analysis
     title: Power Analysis
     image: images/apps/mv_power_analysis.png
+    url: test
   # - id:    power_simulation
   #   title: Power Simulation
   #   image: images/apps/power_simulation.png
