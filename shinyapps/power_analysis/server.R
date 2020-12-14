@@ -1,4 +1,5 @@
 shinyServer(function(input, output, session) {
+
   #############################################################################
   # DOWNLOAD HANDLERS
 
@@ -17,17 +18,18 @@ shinyServer(function(input, output, session) {
   #
   # output$download_power <- plot_download_handler("power", power)
 
-  # ########### DATA ##########
+  ########## DATA ##########
 
+  # subset of data used for calculation based on user input
   pwrdata <- reactive({
     req(input$dataset_name_pwr)
     req(input$feature_option)
     result <- metavoice_data %>%
       filter(dataset == input$dataset_name_pwr) %>%
       filter(feature == input$feature_option)
-    # result <- result[!is.infinite(result$d_calc),] #added to remove in rhd
   })
 
+  # names of datasets included in database to for input
   dataset_names <- reactive({
     req(input$domain)
     dataset_info %>%
@@ -35,6 +37,7 @@ shinyServer(function(input, output, session) {
       pull(name)
   })
 
+  # possible features in chosen dataset
   feature_options <- reactive({
     req(input$dataset_name_pwr)
     dataset_info %>%
@@ -44,33 +47,63 @@ shinyServer(function(input, output, session) {
 
   })
 
+  ########### PWR MODEL ###########
 
+  # power model if no moderator is chosen, without random effects
+  # pwr_no_mod_model <- reactive({
+  #   metafor::rma(yi = d_calc, vi = d_var_calc, slab = as.character(expt_unique),
+  #                method = "REML",
+  #                data = pwrdata())
+  # })
 
-
-  # ########### PWR MODEL ###########
+  # power model if no moderator is chosen, with random effects
   pwr_no_mod_model <- reactive({
-    metafor::rma(d_calc, vi = d_var_calc, slab = as.character(expt_unique),
-                 data = pwrdata(), method = "REML")
+    metafor::rma.mv(yi = d_calc, V = d_var_calc,
+                    random = ~ 1 | same_sample / short_cite / unique_row,
+                    slab = expt_unique,
+                    data = pwrdata(),
+                    method = "REML")
   })
 
+
+  # power model if moderator is chosen, without random effects
+  # pwrmodel <- reactive({
+  #   if (length(input$pwr_moderators) == 0) {
+  #     pwr_no_mod_model()
+  #   } else {
+  #     mods <- paste(input$pwr_moderators, collapse = "+")
+  #     metafor::rma(as.formula(paste("d_calc ~", mods)), vi = d_var_calc,
+  #                  slab = as.character(expt_unique), data = pwrdata(),
+  #                  method = "REML")
+  #   }
+  # })
+
+  # power model if moderator is chosen, with random effects
   pwrmodel <- reactive({
     if (length(input$pwr_moderators) == 0) {
       pwr_no_mod_model()
     } else {
       mods <- paste(input$pwr_moderators, collapse = "+")
-      metafor::rma(as.formula(paste("d_calc ~", mods)), vi = d_var_calc,
-                   slab = as.character(expt_unique), data = pwrdata(),
-                   method = "REML")
+      metafor::rma.mv(as.formula(paste("d_calc ~", mods)), V = d_var_calc,
+                      random = ~ 1 | same_sample / short_cite / unique_row,
+                      slab = expt_unique,
+                      data = pwrdata(),
+                      method = "REML")
     }
   })
 
+
+  ########### RENDER UI FOR MODERATOR CHOICES #############
+
+  # UI output of moderator options
+  ## if an additional moderator is added, this moderator needs to be added in possible_mods
   output$pwr_moderator_input <- renderUI({
     req(input$dataset_name_pwr)
     possible_mods <- list("Task type" = "task_type",
-                        "Native language" = "native_language",
-                        "Prosody type" = "prosody_type",
-                        "Mean age (months)" = "mean_age",
-                        "Diagnosis specification" = "diagnosis_specification")
+                          "Native language" = "native_language",
+                          "Prosody type" = "prosody_type",
+                          "Mean age (years)" = "mean_age",
+                          "Diagnosis specification" = "diagnosis_specification")
     custom_mods <- dataset_info %>%
       filter(name == input$dataset_name_pwr) %>%
       .$moderators %>%
@@ -86,15 +119,15 @@ shinyServer(function(input, output, session) {
                        inline = FALSE)
   })
 
-  ########### RENDER UI FOR MODERATOR CHOICES #############
+  # UI output of moderator choices based on moderator input
+  ## if an additional moderator is added, this moderator needs to be added here
   output$pwr_moderator_choices <- renderUI({
     uis <- list()
 
-    #added this (copied from above + adjusted)
     if (any(input$pwr_moderators == "mean_age")) {
       uis <- c(uis, list(
         sliderInput("pwr_age_months",
-                    "Age of experimental participants (months)",
+                    "Age of participants (years)",
                     min = 0, max = ceiling(max(pwrdata()$mean_age)),
                     value = round(mean(pwrdata()$mean_age)),
                     step = 1)
@@ -138,8 +171,8 @@ shinyServer(function(input, output, session) {
 
   ########### POWER COMPUTATIONS #############
 
-  # this is awful because RMA makes factors and dummy-codes them, so newpred
-  # needs to have this structure.
+  ## this is awful because RMA makes factors and dummy-codes them, so newpred needs to have this structure
+  ### if an additional moderator is added, this moderator needs to be added here
   d_pwr <- reactive({
     if (length(input$pwr_moderators > 0)) {
       newpred_mat <- matrix(nrow = 0, ncol = 0)
@@ -224,16 +257,18 @@ shinyServer(function(input, output, session) {
 
   })
 
+  ############ POWER CURVE ##############
 
-  ## now do the actual power analysis plot
-
+  # plot output of power curve
   output$power <- renderPlot({
+
+    ## maximum n is n at 90 power, but min 60 and max 200
     max_n <- min(max(60, pwr::pwr.t.test(d = d_pwr(), sig.level = .05, power = .9)$n), 200)
 
+    ## power calculations in intervals
     pwrs <- data.frame(ns = seq(5, max_n, 5),
                        ps = pwr::pwr.t.test(d = d_pwr(), n = seq(5, max_n, 5), sig.level = .05)$power,
                        stringsAsFactors = FALSE)
-
 
     qplot(ns, ps, geom = c("point","line"),
           data = pwrs) +
@@ -242,16 +277,18 @@ shinyServer(function(input, output, session) {
       ylim(c(0,1)) +
       xlim(c(0,max_n)) +
       ylab("Power to reject the null hypothesis at p < .05") +
-      xlab("Number of participants per group")
+      xlab("Number of participants per group (patient, control)")
   })
 
-  ### UI ELEMENTS
+  ############# UI ELEMENTS ###############
 
+  # function to display names with capital first letter
   display_name <- function(fields) {
     sp <- gsub("_", " ", fields)
     paste0(toupper(substring(sp, 1, 1)), substring(sp, 2))
   }
 
+  # UI ouput to select domain
   output$domain_selector <- renderUI({
     selectInput(inputId = "domain",
                 label = "Domain",
@@ -261,13 +298,15 @@ shinyServer(function(input, output, session) {
     )
   })
 
+  # UI output to select dataset
   output$dataset_name <- renderUI({
     selectInput(inputId = "dataset_name_pwr",
-                label = "Meta-analysis",
+                label = "Dataset",
                 choices = dataset_names()
     )
   })
 
+  # UI output to select feature
   output$feature_selector <- renderUI({
     selectInput(inputId = "feature_option",
                 label = "Feature",
@@ -276,54 +315,60 @@ shinyServer(function(input, output, session) {
     )
   })
 
+  # UI output for help texts of features, texts can be found in shinyapps/common/global.R
   output$feature_help_text <- renderUI({
     req(input$feature_option)
-    feature_help_texts <- c(
-      "speech_duration" = "Duration of speech (referring to e.g. syllables, lexical items (words) or full utterances)",
-      "speech_rate" = "Speed of speech, measured as syllables or words over time (in minutes or seconds)",
-      "speech_percentage" = "Percentage of spoken time (i.e. non-pause time)",
-      "pause_duration" = "Mean pause duration",
-      "pause_number" = "Number of pauses, as defined by the single study",
-      "pause_length" = "Total length of pauses (in ms or s)",
-      "pause_total_length" = "Total length of pauses (in ms or s)",
-      "response_latency" = "Time passing between a stimulus and the initiation of speech by the subject",
-      "pause_variability" = "Dispersion of pause duration, measured in variance or standard deviation",
-      "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0.",
-      "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
-      "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
-      "pitch_range" = "Difference between the lowest and highest value of pitch",
-      "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
-      "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
-      "f3" = "The 3rd spectral peak of the sound spectrum generated in speech",
-      "f4" = "The 4th spectral peak of the sound spectrum generated in speech",
-      "f5" = "The 5th spectral peak of the sound spectrum generated in speech",
-      "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
-      "formant_bandwidth" = "No definition available, as feature is underspecified in original paper",
-      "format_amplitude" = "No definition available, as feature is underspecified in original paper",
-      "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
-      "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)"
-    )
     HTML(paste0("<i class=\"text-muted\">", feature_help_texts[input$feature_option], "</i>"))
   })
 
+  # text output for citation of data set
+  output$data_citation <- renderText({
+    req(input$dataset_name_pwr)
+    full_citation <- dataset_info %>%
+      filter(name == input$dataset_name_pwr) %>%
+      select(full_citation)
+    paste(full_citation)})
 
-  ### POWER BOXES
+  ## text output for model blurb
+  output$ma_model_blurb <- renderUI({
+    HTML(paste0("Effect Size (Cohen's d) is calculated using a random effects model, assuming studies within a paper share variance. For details, see
+                <a href='https://metalab.stanford.edu/documentation.html#statistical_approach' target='_blank'>
+                Statistical Approach</a>. Power is computet for a two-sample t-test, based on the computed effect size and significance level of 0.05."))
+  })
+
+  # text output for link to dataset
+  output$link_to_dataset <- renderUI({
+    req(input$dataset_name_pwr)
+    base_url <- "https://langcog.github.io/metalab2/dataset/" # change to our website
+    short_name <- dataset_info %>%
+      filter(name == input$dataset_name_pwr) %>%
+      select(short_name)
+    HTML(paste0("<i class=\"text-muted\">For more information see
+                <a href='https://langcog.github.io/metalab2/documentation.html#dataset_info' target='_blank'>
+                Documentation</a> or <a href='", base_url, short_name, ".html', target='_blank'>
+                View raw dataset</a>. Please cite the dataset_info that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a></i>"))
+  })
+
+  # UI POWER BOXES
+  ## effect size (Cohen's d)
   output$power_d <- renderValueBox({
     valueBox(
-      round(d_pwr(), digits = 2), "Effect Size",
+      round(d_pwr(), digits = 2), "Effect Size (Cohen's d)",
       icon = icon("record", lib = "glyphicon"),
       color = "light-blue"
     )
   })
 
+  ## number of participants per group
   output$power_n <- renderValueBox({
     valueBox(
-      if(pwr_80() < 200) {round(pwr_80(), digits = 2) } else { "> 200"}, "N for 80% power",
+      if(pwr_80() < 200) {round(pwr_80(), digits = 2) } else { "> 200"}, "N per group for 80% power",
       icon = icon("users", lib = "glyphicon"),
       color = "light-blue"
     )
   })
 
+  ## n of experiments included in analysis
   output$power_s <- renderValueBox({
     valueBox(
       nrow(pwrdata()), "Experiments",
@@ -332,35 +377,31 @@ shinyServer(function(input, output, session) {
     )
     })
 
-  output$fewstudies <- renderText({"There are less than two studies, which have investigated this feature. Please choose a different feature."})
+  # conditional text if there are < 3 studies
+  output$fewstudies <- renderText({"There are less than 3 studies, which have investigated this feature. Please choose a different feature."})
   output$contribute <- renderText({"If you would like to contribute with a study, see CONTRIBUTELINK"})
 
-  # output$link_to_dataset <- renderUI({
-  #   req(input$dataset_name)
-  #   base_url <- "https://langcog.github.io/metalab2/dataset/" # change to our website
-  #   short_name <- dataset_info %>%
-  #     filter(name == input$dataset_name) %>%
-  #     select(short_name)
-  #   HTML(paste0("<i class=\"text-muted\">For more information see
-  #               <a href='https://langcog.github.io/metalab2/documentation.html#dataset_info' target='_blank'>
-  #               Documentation</a> or <a href='", base_url, short_name, ".html', target='_blank'>
-  #               View raw dataset</a>. Please cite the dataset_info that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a></i>"))
-  # })
-
+  # conditional output: if there are < 3 studies display text, otherwise boxes and power curve
   output$conditional_results <- renderUI({
-    if (nrow(pwrdata()) > 1){
+
+    ### if there > 2 studies
+    if (nrow(pwrdata()) > 2){
       list(fluidRow(valueBoxOutput("power_d", width = 4),
                     valueBoxOutput("power_n", width = 4),
                     valueBoxOutput("power_s", width = 4)),
-            box(width = NULL, #status = "danger",
-             fluidRow(
-               column(width = 10,
-                      p(strong("Power plot"), "of N necessary to achieve p < .05"),
-                      plotOutput("power"),
-                      p("Statistical power to detect a difference between conditions at p < .05. Dashed line shows 80% power, dotted lineshows necessary sample size to achieve that level of power.")
-               ))))}
-      else {
-        box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), textOutput("contribute"))))
-      }
+           box(width = NULL, #status = "danger",
+               fluidRow(
+                 column(width = 12,
+                        p(strong("Power plot"), "of N necessary to achieve p < .05"),
+                        plotOutput("power"),
+                        br(),
+                        p("Statistical power to detect a difference between groups at p < .05. Dashed line shows 80% power, dotted lineshows necessary sample size in each group to achieve that level of power.")
+                 ))))}
+
+    ### if there are < 3 studies
+    else {
+      box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), textOutput("contribute"))))
+    }
   })
+
   })
