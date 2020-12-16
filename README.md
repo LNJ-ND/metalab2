@@ -65,7 +65,6 @@ cd YOUR/DIRECTORY
 
 ## clone the MetaVoice_Website repository to the current directory
 git clone https://github.com/LNJ-ND/MetaVoice_Website.git
-
 ```
 
 #### 2. Opening the Project
@@ -83,7 +82,6 @@ library(renv)
 
 ## install MetaVoice package dependencies
 renv::restore()
-
 ```
 
 #### 4. Buildig the website (pages) locally
@@ -107,7 +105,6 @@ shiny::runApp(here::here("shinyapps", "visualization"))
 ## build and run the power analysis app
 options(shiny.autoreload = TRUE)
 shiny::runApp(here::here("shinyapps", "power_analysis")) 
-
 ````
 
 
