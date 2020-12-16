@@ -6,9 +6,9 @@ Overall, the website is built based on a similar website called MetaLab. This we
 
 In the following you can find information about: 
 
-- Overview of the GitHub Repository 
-- Building MetaVoice locally
-- Contributing to MetaVoice 
+- [Overview of the GitHub Repository](https://github.com/LNJ-ND/MetaVoice_Website#overview-of-the-github-repository) 
+- [Building MetaVoice locally](https://github.com/LNJ-ND/MetaVoice_Website#building-metavoice-locally) 
+- [Contributing to MetaVoice](https://github.com/LNJ-ND/MetaVoice_Website#contributing-to-metavoice)
 
 
 ## Overview of the GitHub Repository 
