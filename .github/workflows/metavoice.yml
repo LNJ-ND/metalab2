@@ -1,4 +1,4 @@
-name: MetaLab Deploy
+name: MetaVoice Deploy
 
 on:
   pull_request:
