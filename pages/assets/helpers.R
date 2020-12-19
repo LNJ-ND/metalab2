@@ -1,4 +1,5 @@
-serverAddress <- "http://52.24.141.166:3838/"
+# server address should be defined here if shiny apps are moved to a server
+# serverAddress <- "http://52.24.141.166:3838/"
 
 menuNavbar <- function(relativePath="", isIndex=FALSE) {
   fluidRow(

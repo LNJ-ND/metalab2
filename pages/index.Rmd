@@ -1,5 +1,5 @@
 ---
-pagetitle: index
+pagetitle: MetaVoice
 ---
 
 ```{r child='assets/setup.Rmd'}
@@ -35,8 +35,8 @@ div(class = "text-center",
       #h1("MetaVoice", class = "jumbo"),
       tags$img(src = "images/logo/mv_logo.png", height = 100, width = 400),
       p(class = "lead",
-            "Interactive tools for community-augmented meta-analysis,", br(),
-            "power analysis, and experimental planning for voice patterns in neuropsychiatric disorders")
+            "Interactive tools for community-augmented meta-analysis and", br(),
+            "power analysis for experimental planning for voice patterns in neuropsychiatric disorders")
       )
     )
   )
@@ -70,51 +70,50 @@ div(
     ),
     column(width = 4, class = "content-info",
       "You can explore the data with", 
-      tags$a(href = "analyses.html", "interactive visualization tools."), 
+      tags$a(href = "analyses.html", "interactive visualisation tools."), 
       br(),  
       br(),
-      "Learn how to ",
-      tags$a(href = "/documentation.html", "contribute,"),
-      "and read our", 
-      tags$a(href = "/tutorials.html", "tutorials.")),
+      "Explore the datasets, the statistical approach and learn how to contribute under",
+      tags$a(href = "/documentation.html", "Documentation,")),
     column(width = 1)
   )
 )
 
 
-fluidRow(class = "domain-info", 
-  column(width = 6,
-    map(1, #seq(1, ceiling(length(domains) / 4), 1
-      ~ tagList(
-        fluidRow(
-        domainBox(i = ., data_domains = domains, offset=c(2, 0), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
-        fluidRow(class = "left-part",
-          column(width = 2),
-          column(width = 10,
-            valueBoxes(
-              filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)
-            )
-        )
-      )
-      )
-    ),
-  column(width = 6,
-    map(2, #length(domains)
-        ~ tagList(
-          fluidRow(
-            domainBox(., domains, c(0, 2), link = paste0("domain/", domains[[.]][["id"]], ".html"))), 
-          fluidRow(class = "right-part",  
-            column(width = 10, valueBoxes(
-              filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)),
-            column(width = 2)
-            )
-          )
-        )))
+# these boxes can be added, if more domains are added to the website
+# fluidRow(class = "domain-info", 
+#   column(width = 6,
+#     map(1, #seq(1, ceiling(length(domains) / 4), 1
+#       ~ tagList(
+#         fluidRow(
+#         domainBox(i = ., data_domains = domains, offset=c(2, 0), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
+#         fluidRow(class = "left-part",
+#           column(width = 2),
+#           column(width = 10,
+#             valueBoxes(
+#               filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)
+#             )
+#         )
+#       )
+#       )
+#     ),
+#   column(width = 6,
+#     map(2, #length(domains)
+#         ~ tagList(
+#           fluidRow(
+#             domainBox(., domains, c(0, 2), link = paste0("domain/", domains[[.]][["id"]], ".html"))), 
+#           fluidRow(class = "right-part",  
+#             column(width = 10, valueBoxes(
+#               filter(ungroup(dataset_info), domain == domain_ids[[.]]) %>% metricsCounter)),
+#             column(width = 2)
+#             )
+#           )
+#         )))
 
 fluidRow(class = "domain-info2",
   column(width = 3), 
   column(width = 12,
-    map(3, #seq(1, ceiling(length(domains) / 4), 1
+    map(1, #seq(1, ceiling(length(domains) / 4), 1
       ~ tagList(
         fluidRow(
           domainBox(i = ., data_domains = domains, offset=c(3, 3), link = paste0("domain/",domains[[.]][["id"]], ".html"))), 
