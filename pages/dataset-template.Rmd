@@ -58,12 +58,12 @@ fluidRow(
           ", N participants = ", as.integer(dataset_info$num_subjects)
           )
         ),
-      tags$li(paste("Last updated:"), dataset_info$last_update),
-      tags$li(paste("Curator(s):"), dataset_info$curator),
+      tags$li(strong("Last updated:"), dataset_info$last_update),
+      tags$li(strong("Curator(s):"), dataset_info$curator),
       tags$li(strong("Search Strategy:"), dataset_info$search_strategy),
       tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no")),
-      tags$li(strong("Voice features:", dataset_info$voice_features))
-    ))
+      tags$li(strong("Voice features:", paste(dataset_info$voice_features, collapse=', ' ))
+    )))
 ```
 
 ```{r echo=FALSE, warning=FALSE}

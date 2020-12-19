@@ -1,7 +1,9 @@
-#ml_url
+#### FUNCTIONS FROM METALABR PACKAGE ####
+
+# ml_url
 mv_metadata_url <- "https://raw.githubusercontent.com/LNJ-ND/MetaVoice_Website/master/metadata/"
 
-#get_metalab_data
+# get_metalab_data
 get_metavoice_data <- function(dataset_info, short_names, domains) {
   if (!missing(short_names) && !missing(domains)) {
     stop("Only provide one of short_names or domains")
@@ -21,7 +23,7 @@ get_metavoice_data <- function(dataset_info, short_names, domains) {
     })
 }
 
-#load_and_validate_dataset
+# load_and_validate_dataset
 mv_load_and_validate_dataset <- function(dataset_info) {
   cat("Getting raw MetaVoice data from Google Sheets for dataset:", dataset_info$name, "\n")
   dataset_contents <- mv_fetch_dataset(dataset_info$key)
@@ -39,14 +41,14 @@ mv_load_and_validate_dataset <- function(dataset_info) {
     return()
   }
 
-  #avg_month <- 365.2425 / 12.0
+  # avg_month <- 365.2425 / 12.0
   ## NB: do we need all_mod here? what is the d_calc filter?
   mv_tidy_dataset(dataset_info, dataset_contents, field_info) %>%
     mutate(all_mod = "") %>%
-           #mean_age_months = mean_age / avg_month) %>%
-     #filter(!is.na(d_calc)) %>%
+           # mean_age_months = mean_age / avg_month) %>%
+     # filter(!is.na(d_calc)) %>%
      mutate(
-       #year = ifelse(
+       # year = ifelse(
          # test = grepl("submitted", study_ID),
          # yes = Inf,
          # no = stringr::str_extract(study_ID, "([:digit:]{4})")),
@@ -56,7 +58,7 @@ mv_load_and_validate_dataset <- function(dataset_info) {
        expt_condition = as.character(expt_condition))
 }
 
-#fetch_dataset
+# fetch_dataset
 mv_fetch_dataset <- function(key) {
   dataset_url <- sprintf(
     "https://docs.google.com/spreadsheets/d/%s/export?id=%s&format=csv",
@@ -74,25 +76,25 @@ mv_fetch_dataset <- function(key) {
   })
 }
 
-#get_metalab_field_info
+# get_metalab_field_info
 get_metavoice_field_info <- function(field_file = paste0(mv_metadata_url, "spec.yaml")) {
   yaml::yaml.load_file(field_file)
 }
 
-#is_valid_dataset
+# is_valid_dataset
 mv_is_valid_dataset <- function(dataset_meta, dataset_contents, field_info) {
   valid_fields <- mv_validate_dataset(dataset_meta, dataset_contents, field_info)
   all(unlist(valid_fields))
 }
 
-#validate_dataset
+# validate_dataset
 mv_validate_dataset <- function(dataset_meta, dataset_contents, field_info) {
   purrr::map(field_info, function(field) {
     mv_validate_dataset_field(dataset_meta$name, dataset_contents, field)
   })
 }
 
-#validate_dataset_field
+# validate_dataset_field
 mv_validate_dataset_field <- function(dataset_name, dataset_contents, field) {
   if (field$required) {
     if (!mv_is_valid_required_field(dataset_name, dataset_contents, field)) {
@@ -123,7 +125,7 @@ mv_validate_dataset_field <- function(dataset_name, dataset_contents, field) {
   return(TRUE)
 }
 
-#is_valid_required_field
+# is_valid_required_field
 mv_is_valid_required_field <- function(dataset_name, dataset_contents, field) {
   if (!field$field %in% names(dataset_contents)) {
     cat(sprintf("Dataset '%s' is missing required field: '%s'.\n",
@@ -134,7 +136,7 @@ mv_is_valid_required_field <- function(dataset_name, dataset_contents, field) {
   }
 }
 
-#is_valid_length
+# is_valid_length
 mv_is_valid_length <- function(dataset_name, dataset_contents, field, length_limit){
   field_contents <- dataset_contents[[field$field]]
   if ((any(nchar(field_contents) > length_limit))){
@@ -146,7 +148,7 @@ mv_is_valid_length <- function(dataset_name, dataset_contents, field, length_lim
   }
 }
 
-#is_valid_options_field
+# is_valid_options_field
 mv_is_valid_options_field <- function(dataset_name, dataset_contents, field) {
   if (class(field$options) == "list") {
     options <- names(unlist(field$options, recursive = FALSE))
@@ -172,7 +174,7 @@ mv_is_valid_options_field <- function(dataset_name, dataset_contents, field) {
   }
 }
 
-#is_valid_numeric_field
+# is_valid_numeric_field
 mv_is_valid_numeric_field <- function(dataset_name, dataset_contents, field) {
   field_contents <- dataset_contents[[field$field]]
   if (!(is.numeric(field_contents) || all(is.na(field_contents)))) {
@@ -184,8 +186,8 @@ mv_is_valid_numeric_field <- function(dataset_name, dataset_contents, field) {
   }
 }
 
-#is_valid_r_corr
-# is_valid_r_corr <- function(dataset_name, dataset_contents, field){
+# is_valid_r_corr
+#  is_valid_r_corr <- function(dataset_name, dataset_contents, field){
 #   field_contents <- dataset_contents[[field$field]]
 #   if ((any(field_contents > 1, na.rm = TRUE)) || any(field_contents < -1, na.rm = TRUE)){
 #     rows <- which(((field_contents > 1 | field_contents < -1))) + 1
@@ -197,7 +199,7 @@ mv_is_valid_numeric_field <- function(dataset_name, dataset_contents, field) {
 #   }
 # }
 
-#tidy_dataset
+# tidy_dataset
 mv_tidy_dataset <- function(dataset_meta, dataset_contents, field_info) {
 
   # Coerce each field's values to the field's type, discard any columns not in
@@ -250,7 +252,7 @@ mv_tidy_dataset <- function(dataset_meta, dataset_contents, field_info) {
 
   # Add any other derived values
   task_type_options <- purrr::keep(field_info, ~.x$field == "task_type")[[1]]$options
-  task_type_names <- unlist(purrr::map(task_type_options, ~.x[[names(.x)]]$fullname)) #ullname?
+  task_type_names <- unlist(purrr::map(task_type_options, ~.x[[names(.x)]]$fullname)) #fullname?
   names(task_type_names) <- unlist(purrr::map(task_type_options, names))
 
   dataset_data_calc %>%
@@ -267,7 +269,7 @@ mv_tidy_dataset <- function(dataset_meta, dataset_contents, field_info) {
     ungroup()
 }
 
-#compute_es
+# compute_es
 mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
                        SD_1 = NA, SD_2 = NA, SD_dif = NA, n_1 = NA, n_2 = NA,
                        t = NA, f = NA, d = NA, d_var = NA, corr = NA,
@@ -276,7 +278,7 @@ mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
 
   assertthat::assert_that(participant_design %in% c("between", "within_two", "within_one"))
 
-  #we introduce variables calles d_calc and d_var_calc to distiguish them from the fields d and d_var, which are fields where effect sizes were already available from the source of the data
+  # we introduce variables calles d_calc and d_var_calc to distiguish them from the fields d and d_var, which are fields where effect sizes were already available from the source of the data
   d_calc <- NA
   d_var_calc <- NA
   es_method <- "missing"
@@ -448,29 +450,29 @@ mv_compute_es <- function(participant_design, x_1 = NA, x_2 = NA, x_dif = NA,
 
 }
 
-#complete
+# complete
 mv_complete <- function(...) {
   args <- list(...)
   !any(unlist(purrr::map(args, ~(is.null(.x) || is.na(.x)))))
 }
 
-#not complete
+# not complete
 mv_incomplete <- function(...) {
   args <- list(...)
   any(unlist(purrr::map(args, ~(is.null(.x) || is.na(.x)))))
 }
 
-#get_metalab_domain_info
+# get_metalab_domain_info
 get_metavoice_domain_info <- function(domain_file = paste0(mv_metadata_url, "domains.yaml")) {
   yaml::yaml.load_file(domain_file)
 }
 
-#get_metalab_report_info
+# get_metalab_report_info
 get_metavoice_report_info <- function(report_file = paste0(mv_metadata_url, "reports.yaml")) {
   yaml::yaml.load_file(report_file)
 }
 
-#get_metalab_derived_field_info
+# get_metalab_derived_field_info
 get_metavoice_derived_field_info <- function(derived_field_file = paste0(mv_metadata_url, "spec_derived.yaml")) {
   yaml::yaml.load_file(derived_field_file) %>%
     transpose() %>%
@@ -478,7 +480,7 @@ get_metavoice_derived_field_info <- function(derived_field_file = paste0(mv_meta
     dplyr::as_data_frame()
 }
 
-#get_metalab_dataset_info
+# get_metalab_dataset_info
 get_metavoice_dataset_info <- function(dataset_file = paste0(mv_metadata_url, "datasets.yaml")) {
   datasets <- yaml::yaml.load_file(dataset_file)
 
@@ -493,7 +495,7 @@ get_metavoice_dataset_info <- function(dataset_file = paste0(mv_metadata_url, "d
   bind_rows(datasets)
 }
 
-#add_metalab_summary_info
+# add_metalab_summary_info
 add_metavoice_summary_info <- function(metavoice_dataset_info, metavoice_data) {
   studies <- metavoice_data %>%
     group_by(dataset) %>%
@@ -513,13 +515,13 @@ add_metavoice_summary_info <- function(metavoice_dataset_info, metavoice_data) {
     rename(name = dataset)
 }
 
-#save_dataset
+# save_dataset
 mv_save_dataset <- function(dataset_meta, dataset_data) {
   write.csv(dataset_data, here("data", paste0(dataset_meta$filename, ".csv")), row.names = FALSE)
   cat(sprintf("Dataset '%s' saved successfully.\n", dataset_meta$name))
 }
 
-#load_cached_dataset
+# load_cached_dataset
 mv_load_cached_dataset <- function(filename) {
   read.csv(
     file.path(here("data", paste0(filename, ".csv"))),
@@ -539,4 +541,50 @@ mv_load_cached_dataset <- function(filename) {
 }
 
 
+#### FUNCTIONS FROM LANGCOG PACKAGE ####
+
+# lower confidence interval: gives the lower bound of the 95\% confidence interval of an empirical distribution
+ci_lower <- function(x, na.rm = FALSE) {
+  stats::quantile(x, 0.025, na.rm)
+}
+
+# upper confidence interval: gives the upper bound of the 95\% confidence interval of an empirical distribution
+ci_upper <- function(x, na.rm = FALSE) {
+  stats::quantile(x, 0.975, na.rm)
+}
+
+# colors used in shiny apps
+# scolarised palette
+solarized_palette <- function(num_values) {
+
+  solarized_colors <- c(magenta = "#d33682",
+                        red = "#dc322f",
+                        orange = "#cb4b16",
+                        yellow = "#b58900",
+                        green = "#859900",
+                        cyan = "#2aa198",
+                        blue = "#268bd2",
+                        violet = "#6c71c4",
+                        purple = "#993399")
+
+  color_order <- c("blue", "orange", "green", "purple", "magenta",
+                   "yellow", "cyan", "violet", "red")
+
+  num_colors <- length(color_order)
+  if (num_values < num_colors) {
+    unname(solarized_colors[Filter(
+      function(color) color %in% color_order[1:num_values],
+      names(solarized_colors)
+    )])
+  } else {
+    color_indeces <- 0:(num_values - 1) %% num_colors
+    unname(solarized_colors[color_indeces + 1])
+  }
+
+}
+
+# scale colour solarized used in ggplots
+scale_colour_solarized <- function(...) {
+  ggplot2::discrete_scale("colour", "solarized", solarized_palette, ...)
+}
 
