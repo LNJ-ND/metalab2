@@ -484,7 +484,7 @@ get_metavoice_dataset_info <- function(dataset_file = paste0(mv_metadata_url, "d
 
   datasets <- datasets %>% purrr::map(function(x) {
     x$moderators <- list(x$moderators)
-    x$features <- list(x$features)
+    x$voice_features <- list(x$voice_features)
     #x$subset <- list(x$subset)
     #x$reliability <- as.logical(x$reliability)
     x
