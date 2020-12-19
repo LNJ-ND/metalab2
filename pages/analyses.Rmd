@@ -1,16 +1,17 @@
 ---
-pagetitle: analyses
+pagetitle: MetaVoice Analyses
 ---
 ```{r child='assets/setup.Rmd'}
 ```
 
 ```{r echo=FALSE}
 shinyapps <-  yaml::yaml.load_file(here("metadata", "shinyapps.yaml"))
-reportList <- yaml::yaml.load_file(here("metadata", "reports.yaml"))
+#reportList <- yaml::yaml.load_file(here("metadata", "reports.yaml"))
 menuNavbar()
 ```
 
 ```{r echo=FALSE}
+# function to render application boxes 
 renderApplication <- function(appInfo) { 
   box(width = 4, align = "center", style = "font-size: 125%; display: block; float: center;",
     tagList(
@@ -28,6 +29,7 @@ renderDomainApplications <- function(domainName, applications) {
   fullWidthPanelBox(domainName, purrr::map(applications, renderApplication))
 }
 
+# shiny ui to display the boxes
 fluidRow(
   column(width = 12,
     names(shinyapps) %>%
@@ -37,6 +39,7 @@ fluidRow(
 ```
 
 ```{r echo=FALSE}
+# for reports: currently not avialble on metavoice
 # renderReport <- function(reportName, reportLink) { 
 #   column(width = 3, align = "center",
 #     div(class = "well well-sm",

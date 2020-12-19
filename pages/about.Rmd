@@ -1,5 +1,5 @@
 ---
-pagetitle: about
+pagetitle: MetaVoice About
 ---
 ```{r child='assets/setup.Rmd'}
 ```
@@ -44,7 +44,7 @@ fullWidthPanelBox(
 
 fullWidthPanelBox(
   "Source code",
-  HTML("The source2 for this website can be found <a href='https://github.com/LNJ-ND/MetaVoice_Website'>on GitHub</a>. The website itself is hosted through GitHub Pages, with the accompanying visualizations hosted on a Shiny server.")
+  HTML("The source2 for this website can be found <a href='https://github.com/LNJ-ND/MetaVoice_Website'>on GitHub</a>. The website itself is hosted through GitHub Pages, with the accompanying visualizations hosted through <a href='https://www.shinyapps.io'>shinyapps.io</a>.")
 )
 ```
 
