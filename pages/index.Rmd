@@ -136,8 +136,10 @@ fluidRow(class = "domain-info2",
 htmltools::includeHTML("footer.html")
 ```
 
+<link rel="shortcut icon" type="image/x-icon" href="images/logo/favicon/favicon.ico">
+
 <script>
-  document.getElementsByTagName("head")[0].innerHTML += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"images/logo/favicon/favicon-32x32.png\">";
+  document.getElementsByTagName("head")[0].innerHTML += "<link rel="shortcut icon" type="image/x-icon" href="images/logo/favicon/favicon.ico">";
   document.getElementsByTagName("title")[0].innerHTML"
 </script>
 
