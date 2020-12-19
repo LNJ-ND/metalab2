@@ -1,10 +1,2 @@
-# - id:     developmental_curves
-#   title:  Developmental curves
-#
-# - id:     hierarchicalrandomeffect
-#   title:  Hierarchical random effects
-#
-# - id:     method_choice
-#   title:  Method selection
-#
-
+# - id:     cross_diagnostic_MA
+#   title:  Cross-diagnostic Meta-Analysis

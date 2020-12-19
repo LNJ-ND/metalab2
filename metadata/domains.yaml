@@ -1,16 +1,10 @@
-- id:    Schizophrenia
-  title: Schizophrenia
+- id:    Voice_Analysis
+  title: Voice Analysis
   image: NA
-  desc:  schizophrenia description
+  desc:  Investigating acoustic features of voice in neuropsychiatric disorders
 
-- id:    Autism_Spectrum_Disorder
-  title: Autism Spectrum Disorder
-  image: NA
-  desc:  asd description
-
-- id:    Hemisphere_Damage
-  title: Hemisphere Damage
-  image: NA
-  desc:  hd description
-
+# - id:    Semantic_Analysis
+#   title: Semantic Analysis
+#   image: NA
+#   desc:  Investigating semantic features of speech in neuropsychiatric disorders
 
