@@ -56,7 +56,6 @@ MetaVoice is a research tool, bridging the gap between research fields investiga
 These datasets include `r as.integer(sum(as.numeric(dataset_info$num_experiments), na.rm = TRUE))` effect sizes from `r as.integer(sum(as.numeric(dataset_info$num_papers), na.rm = TRUE))` papers, including `r as.integer(sum(as.numeric(dataset_info$num_subjects), na.rm = TRUE))` subjects.
 
 These aggregated data help to acquire better estimates of effect sizes across disorders, languages of participants and experimental methods. Thereby, it also becomes possible to explore the impact of potential moderators. The power analysis tool allows researchers to plan future studies with adequate sample sizes.
-
 <br/><br/>
 
 #### Documentation 
@@ -248,7 +247,7 @@ drv_table <- make_datatable(fields_derived)
 ### Export Data
 
 #### Download the data
-You can download the data from both the [home page](.) and the [visualization page](/app.html?id=visualization).
+You can download the data from both the [home page](.), [visualization page](./app.html?id=visualization) and the [documentation page](./documentation.html).
 
 1. From the [home page](.)
 
@@ -260,7 +259,7 @@ You can download the data from both the [home page](.) and the [visualization pa
       
     1.4. Choose the data format that you want (EXCEL - recommended for manual calculations using a spreadsheet software - but you should make sure that your local spreadsheet software is set to use "." as decimal separator to avoid errors, or CSV - recommended for reading into a statistical software such as R) by clicking on it in the conditional menu. 
    
-2. From the visualisation page.
+2. From the [visualization page](./app.html?id=visualization)
    
     2.1. Open the “Domain” drop-down menu and click on the one you are interested in. Currently only one domain is available.
 
@@ -270,7 +269,7 @@ You can download the data from both the [home page](.) and the [visualization pa
 
     2.4. Click on the “Download data” button above the “Dataset” menu. This will download the data in CSV format. You can also click on “View raw dataset” and follow steps 1.2. and 1.3.  
 
-3. From the documentation page.
+3. From the [documentation page](./documentation.html)
 
     3.1. Open the “Datasets” tab and click on the dataset you are interested in.
 

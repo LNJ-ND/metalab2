@@ -42,7 +42,7 @@ shinyServer(function(input, output, session) {
     req(input$dataset_name)
     dataset_info %>%
       filter(name == input$dataset_name) %>%
-      .$features %>%
+      .$voice_features %>%
       unlist()
   })
 
@@ -63,7 +63,7 @@ shinyServer(function(input, output, session) {
     # subset <- input$subset_input
     # if (!is.null(subset)) {
     #   if (subset != "All data") {
-    #     result %>% filter_(paste(subset, "== TRUE"))
+    #     result %>% filter(paste(subset, "== TRUE"))
     #   } else {
     #     result
     #   }
@@ -178,7 +178,7 @@ shinyServer(function(input, output, session) {
 
   output$feature_selector <- renderUI({
     selectInput(inputId = "feature_option",
-                label = "Feature",
+                label = "Voice Feature",
                 choices = feature_options() %>%
                   set_names(display_name(.))
     )
@@ -258,32 +258,6 @@ shinyServer(function(input, output, session) {
 
   output$feature_help_text <- renderUI({
     req(input$feature_option)
-    feature_help_texts <- c(
-        "speech_duration" = "Duration of speech (referring to e.g. syllables, lexical items (words) or full utterances)",
-        "speech_rate" = "Speed of speech, measured as syllables or words over time (in minutes or seconds)",
-        "speech_percentage" = "Percentage of spoken time (i.e. non-pause time)",
-        "pause_duration" = "Mean pause duration",
-        "pause_number" = "Number of pauses, as defined by the single study",
-        "pause_length" = "Total length of pauses (in ms or s)",
-        "pause_total_length" = "Total length of pauses (in ms or s)",
-        "response_latency" = "Time passing between a stimulus and the initiation of speech by the subject",
-        "pause_variability" = "Dispersion of pause duration, measured in variance or standard deviation",
-        "pitch" = "Mean pitch reflects the frequency of vibrations of the vocal cords. The fundamental frequenecy (f0) is perceived as pitch which is the log-transform of f0.",
-        "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
-        "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
-        "pitch_range" = "Difference between the lowest and highest value of pitch",
-        "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
-        "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
-        "f3" = "The 3rd spectral peak of the sound spectrum generated in speech",
-        "f4" = "The 4th spectral peak of the sound spectrum generated in speech",
-        "f5" = "The 5th spectral peak of the sound spectrum generated in speech",
-        "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
-        "formant_bandwidth" = "No definition available, as feature is underspecified in original paper",
-        "format_amplitude" = "No definition available, as feature is underspecified in original paper",
-        "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
-        "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)"
-        )
-
     HTML(paste0("<i class=\"text-muted\">", feature_help_texts[input$feature_option], "</i>"))
   })
 
@@ -698,12 +672,12 @@ shinyServer(function(input, output, session) {
   }
 
   output$funnel <- renderPlotly(funnel())
-  output$funnel_test <- renderText({
-    funnel_test <- metafor::regtest(model())
-    sprintf("Regression test for funnel plot asymmetry: z = %.3g, p = %.3g.
-            Interpret with caution due to the possible presence of confounding
-            moderators.", funnel_test$zval, funnel_test$pval)
-  })
+  # output$funnel_test <- renderText({
+  #   funnel_test <- metafor::regtest(model())
+  #   sprintf("Regression test for funnel plot asymmetry: z = %.3g, p = %.3g.
+  #           Interpret with caution due to the possible presence of confounding
+  #           moderators.", funnel_test$zval, funnel_test$pval)
+  # })
 
   #### CONDITIONAL LIMIT FOR NUMBER OF EXPERIMENTS
   # Conditional left column
@@ -716,7 +690,7 @@ shinyServer(function(input, output, session) {
                      p(strong("Funnel plot"), "of bias in effect sizes"))
             ),
             plotlyOutput("funnel"),
-            div(class = "text-center", textOutput("funnel_test")),
+            #div(class = "text-center", textOutput("funnel_test")),
             br(),
             helpText("Studies with high precision should be close to the average,
                        while studies with low precision can be spread evenly on both sides of
