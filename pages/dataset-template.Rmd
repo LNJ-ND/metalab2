@@ -39,7 +39,7 @@ menuNavbar("../")
 ```{r results='asis', echo=FALSE}
 fluidRow(
   column(width = 12,
-    h1(dataset_info$name),
+    h1(paste(dataset_info$domain, dataset_info$name, sep = ": ")),
     tags$ul(
       if (dataset_info$citation != "") {
         if (dataset_info$link == "") {
@@ -61,8 +61,8 @@ fluidRow(
       tags$li(strong("Last updated:"), dataset_info$last_update),
       tags$li(strong("Curator(s):"), dataset_info$curator),
       tags$li(strong("Search Strategy:"), dataset_info$search_strategy),
-      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no")),
-      tags$li(strong("Voice features:", paste(dataset_info$voice_features, collapse=', ' ))
+      tags$li(strong("Systematic:"), if(!is.null(dataset_info$systematic) && dataset_info$systematic) "yes" else "no"),
+      tags$li(strong("Voice features:"), paste(dataset_info$voice_features, collapse=', ' ))
     )))
 ```
 

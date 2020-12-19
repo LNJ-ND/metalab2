@@ -37,7 +37,8 @@ menuNavbar("../")
 ```{r header, echo=FALSE}
 fluidRow(
   column(width = 12,
-    h1(class = "domain-header", params$domainName),
+    h1(class = "domain-header", params$domain_name),
+    br(),
     fluidRow(class = "domain-boxes",
       column(width = 5, 
         valueBoxes(

@@ -18,7 +18,7 @@ domainBox <- function(i, data_domains, offsets, link) {
           #column(width = 4),
             #img(src = data$image, width = "100%", class = "dataset-img")),
           column(width = 12, class = "dataset-txt", align = "center", #class = "dataset-text"
-            br(), h4((data$title)), br()) #from yaml 
+            br(), h4((data$title)), p(data$desc), br()) #from yaml 
           )
         ) 
       ),   

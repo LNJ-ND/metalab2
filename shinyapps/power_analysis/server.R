@@ -42,7 +42,7 @@ shinyServer(function(input, output, session) {
     req(input$dataset_name_pwr)
     dataset_info %>%
       filter(name == input$dataset_name_pwr) %>%
-      .$features %>%
+      .$voice_features %>%
       unlist()
 
   })
@@ -309,7 +309,7 @@ shinyServer(function(input, output, session) {
   # UI output to select feature
   output$feature_selector <- renderUI({
     selectInput(inputId = "feature_option",
-                label = "Feature",
+                label = "Voice Feature",
                 choices = feature_options() %>%
                   set_names(display_name(.))
     )
