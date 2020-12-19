@@ -186,14 +186,15 @@ shinyServer(function(input, output, session) {
 
   output$link_to_dataset <- renderUI({
     req(input$dataset_name)
-    base_url <- "https://langcog.github.io/metalab2/dataset/" # change to our website
+    base_url <- "https://metavoice.au.dk/dataset/" # change to our website
     short_name <- dataset_info %>%
       filter(name == input$dataset_name) %>%
       select(short_name)
-    HTML(paste0("For references of the feature descriptions see REFERENCES LINK. For more information about effect sizes, moderators and the dataset see
-                <a href='https://langcog.github.io/metalab2/documentation.html#dataset_info' target='_blank'>
-                Documentation</a> or <a href='", base_url, short_name, ".html', target='_blank'>
-                View raw dataset</a>. Please cite the dataset that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a>"))
+    HTML(paste0("For references of the feature descriptions see <a href='https://metavoice.au.dk/publications.html' target='_blank'>
+                Publications</a>. For more information about effect sizes, moderators and the dataset see
+                <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Statistical Approach</a> or <a href='", base_url, short_name, ".html', target='_blank'>
+                view raw dataset</a>. Please cite the dataset that you use following <a href='https://metavoice.au.dk/publications.html' target='_blank'> our citation policy.</a> </a>"))
   #<i class=\"text-muted\">
     })
 
@@ -213,8 +214,8 @@ shinyServer(function(input, output, session) {
 
   output$ma_model_blurb <- renderUI({
     HTML(paste0("Random effects model assuming studies within a paper share variance. For details, see
-                <a href='https://metalab.stanford.edu/documentation.html#statistical_approach' target='_blank'>
-                Statistical Approach</a>."))
+                <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Statistical Approach</a>.<br></br>Be aware, that model estimations may not be reliable if there are only a few number of studies investigating the particular feature."))
   })
 
   # output$dataset_name <- renderUI({
@@ -712,11 +713,12 @@ shinyServer(function(input, output, session) {
   })
 
   # Conditional right column
-  output$fewstudies <- renderText({"Currently, there is less than 1 study investigating this feature. Therefore, no model can be run for this feature. For a visualisation of the single study, see the box plot on the left."})
-  output$contribute <- renderText({"If you would like to contribute with a study to the database, see CONTRIBUTELINK"})
+  output$fewstudies <- renderText({"Currently, there is less than 3 study investigating this feature. Therefore, no model can be run for this feature. For a visualisation of the single study, see the box plot on the left."})
+  output$contribute <- renderText({"If you would like to contribute with a study to the database, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Contributing to MetaVoice</a>"})
 
   output$experiment_limit_right <- renderUI({
-    if (nrow(data()) > 1){
+    if (nrow(data()) > 2){
       list(
         fluidRow(
           box(width = NULL, #status = "danger",

@@ -137,8 +137,8 @@ htmltools::includeHTML("footer.html")
 ```
 
 <script>
-  document.getElementsByTagName("head")[0].innerHTML += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"images/logo/favicon/favicon-32x32.png\">";
-  document.getElementsByTagName("title")[0].innerHTML += " :Community-augmented meta-analysis"
+  document.getElementsByTagName("head")[0].innerHTML += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"images/logo/favicon.png\">";
+  document.getElementsByTagName("title")[0].innerHTML"
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
