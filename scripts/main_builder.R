@@ -37,6 +37,7 @@ if (!dir.exists(render_dir)) {
   dir.create(render_dir)
 }
 file.copy(here("pages/images"), here("rendered"), recursive = TRUE)
+file.copy("CNAME", here("rendered"))
 
 ## render reports
 # reports %>% purrr::map(

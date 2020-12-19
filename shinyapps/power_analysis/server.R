@@ -332,21 +332,22 @@ shinyServer(function(input, output, session) {
   ## text output for model blurb
   output$ma_model_blurb <- renderUI({
     HTML(paste0("Effect Size (Cohen's d) is calculated using a random effects model, assuming studies within a paper share variance. For details, see
-                <a href='https://metalab.stanford.edu/documentation.html#statistical_approach' target='_blank'>
-                Statistical Approach</a>. Power is computet for a two-sample t-test, based on the computed effect size and significance level of 0.05."))
+                <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Statistical Approach</a>. Power is computed for a two-sample t-test, based on the computed effect size and significance level of 0.05.<br></br>Be aware, that model estimations may not be reliable if there are only a few number of studies investigating the particular feature."))
   })
 
   # text output for link to dataset
   output$link_to_dataset <- renderUI({
     req(input$dataset_name_pwr)
-    base_url <- "https://langcog.github.io/metalab2/dataset/" # change to our website
+    base_url <- "https://metavoice.au.dk/dataset/" # change to our website
     short_name <- dataset_info %>%
       filter(name == input$dataset_name_pwr) %>%
       select(short_name)
-    HTML(paste0("<i class=\"text-muted\">For more information see
-                <a href='https://langcog.github.io/metalab2/documentation.html#dataset_info' target='_blank'>
-                Documentation</a> or <a href='", base_url, short_name, ".html', target='_blank'>
-                View raw dataset</a>. Please cite the dataset_info that you use following <a href='https://langcog.github.io/metalab2/publications.html' target='_blank'> our citation policy.</a> </a></i>"))
+    HTML(paste0("For references of the feature descriptions see <a href='https://metavoice.au.dk/publications.html' target='_blank'>
+                Publications</a>. For more information about effect sizes, moderators and the dataset see
+                <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Statistical Approach</a> or <a href='", base_url, short_name, ".html', target='_blank'>
+                view raw dataset</a>. Please cite the dataset that you use following <a href='https://metavoice.au.dk/publications.html' target='_blank'> our citation policy.</a> </a>"))
   })
 
   # UI POWER BOXES
@@ -379,7 +380,8 @@ shinyServer(function(input, output, session) {
 
   # conditional text if there are < 3 studies
   output$fewstudies <- renderText({"There are less than 3 studies, which have investigated this feature. Please choose a different feature."})
-  output$contribute <- renderText({"If you would like to contribute with a study, see CONTRIBUTELINK"})
+  output$contribute <- renderText({"If you would like to contribute with a study, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Contributing to MetaVoice</a>"})
 
   # conditional output: if there are < 3 studies display text, otherwise boxes and power curve
   output$conditional_results <- renderUI({

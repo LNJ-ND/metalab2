@@ -57,7 +57,7 @@ feature_help_texts <- c(
   "f6" = "The 6th spectral peak of the sound spectrum generated in speech",
   "formant_bandwidth" = "No definition available, as feature is underspecified in original paper",
   "format_amplitude" = "No definition available, as feature is underspecified in original paper",
-  "intensity" = "The amount of energy carried by a sound wave (perceived as loudness)",
-  "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change)"
+  "intensity" = "The amount of energy carried by a sound wave (perceived as loudness). Note that this feature may also depend on the recording setup.",
+  "intensity_variability" = "Dispersion of intensity (variance, standard deviation, change). Note that this feature may also depend on the recording setup."
 )
 
