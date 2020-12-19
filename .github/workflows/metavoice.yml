@@ -17,12 +17,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: r-lib/actions/setup-r@v1
       with:
-        r-version: '4.0.2'
+        r-version: '3.6.2'
 
     - name: Install dependencies
       run: |
         sudo apt-get install libcurl4-openssl-dev pandoc
-
+        
     - name: Cache packages
       uses: actions/cache@v1
       with:
@@ -30,14 +30,14 @@ jobs:
         key: ${{ runner.os }}-renv-20200715-${{ hashFiles('**/renv.lock') }}
         restore-keys: |
           ${{ runner.os }}-renv-
-
+          
     - name: Restore packages
       shell: Rscript {0}
       run: |
         options(repos = c(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"))
         if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
         renv::restore()
-
+        
     - run: Rscript -e 'source(here::here("scripts", "main_builder.R"))'
     - run: find ./shinyapps/* -type d -exec touch {}/restart.txt \;
     - run: cp -R metadata/ ./shinyapps/common/
