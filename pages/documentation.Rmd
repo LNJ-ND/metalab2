@@ -52,7 +52,7 @@ display_name <- function(fields) {
 ### Overview
 
 #### Overview
-MetaVoice is a research tool, bridging the gap between research fields investigating voice patterns in different neuropsychiatric disorders. At the moment, MetaVoice contains studies on voice patterns within `r length(unique(dataset_info$domain))` domain(s): `r display_name(unique(dataset_info$domain))`. Within this domain, there are currently datasets related to `r as.integer(length(unique(dataset_info$name), na.rm = TRUE))` disorders: `r display_name(unique(dataset_info$name))`.
+MetaVoice is a research tool, bridging the gap between research fields investigating voice patterns in different neuropsychiatric disorders. At the moment, MetaVoice contains studies on voice patterns within `r length(unique(dataset_info$domain))` domain(s): `r display_name(unique(dataset_info$domain))`. Within this domain, there are currently datasets related to `r length(unique(dataset_info$name))` disorders: `r display_name(unique(dataset_info$name))`.
 These datasets include `r as.integer(sum(as.numeric(dataset_info$num_experiments), na.rm = TRUE))` effect sizes from `r as.integer(sum(as.numeric(dataset_info$num_papers), na.rm = TRUE))` papers, including `r as.integer(sum(as.numeric(dataset_info$num_subjects), na.rm = TRUE))` subjects.
 
 These aggregated data help to acquire better estimates of effect sizes across disorders, languages of participants and experimental methods. Thereby, it also becomes possible to explore the impact of potential moderators. The power analysis tool allows researchers to plan future studies with adequate sample sizes.
