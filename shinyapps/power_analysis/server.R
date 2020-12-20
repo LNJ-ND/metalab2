@@ -364,7 +364,7 @@ shinyServer(function(input, output, session) {
   output$power_n <- renderValueBox({
     valueBox(
       if(pwr_80() < 200) {round(pwr_80(), digits = 2) } else { "> 200"}, "N per group for 80% power",
-      icon = icon("users", lib = "glyphicon"),
+      icon = icon("users"),
       color = "light-blue"
     )
   })

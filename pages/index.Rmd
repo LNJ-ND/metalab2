@@ -5,10 +5,6 @@ pagetitle: MetaVoice
 ```{r child='assets/setup.Rmd'}
 ```
 
-```{r, echo=FALSE}
-htmltools::includeHTML("favicontest.html")
-```
-
 ```{r tools, echo=FALSE}
 domainBox <- function(i, data_domains, offsets, link) {
   data <- data_domains[[i]] 
@@ -53,7 +49,7 @@ div(
   fluidRow(
     column(width = 1),
     column(width = 3,
-      tags$a(href = paste0("app.html?id=", "visualization"),
+      tags$a(href = paste0("app.html?id=", "visualisation"),
           div(class = "thumbnail",
           tags$img(src = "images/apps/mv_visualisation.png"),
           div(class = "caption", align = "center",

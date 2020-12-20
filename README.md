@@ -1,6 +1,6 @@
 # MetaVoice
 
-MetaVoice provides tools for community-augmented meta-analysis (CAMA; Christia, Tsuji, & Bergmann, 2020; Tsuji, Bergmann & Christia, 2014) and power analysis for research on voice patterns across neuropsychiatric disorders. These tools are shiny applications (i.e. apps), implemented on the [MetaVoice] (LINK) website. Besides these shiny apps, the website also contains static content, which is hosted through GithubPages. The shiny apps are hosted through shinyapps.io, but are embedded in the static content by using their urls. Thereby, both static pages and dynamic shiny apps are brought together into a single website, MetaVoice.
+MetaVoice provides tools for community-augmented meta-analysis (CAMA; Christia, Tsuji, & Bergmann, 2020; Tsuji, Bergmann & Christia, 2014) and power analysis for research on voice patterns across neuropsychiatric disorders. These tools are shiny applications (i.e. apps), implemented on the [MetaVoice](https://metavoice.au.dk) website. Besides these shiny apps, the website also contains static content, which is hosted through GithubPages. The shiny apps are hosted through shinyapps.io, but are embedded in the static content by using their urls. Thereby, both static pages and dynamic shiny apps are brought together into a single website, MetaVoice.
 
 Overall, the website is built based on a similar website called MetaLab. This website has been updated, but the version on which this website is built on can be reproduced locally using the [GitHub repository](https://github.com/langcog/metalab2). 
 
@@ -116,7 +116,7 @@ Thank you for considering contributing to MetaVoice!
 
 If you have encountered a problem or have a question, you are welcome to create an issue on Github. 
 
-To edit specific contents of the website, you may take into account the following directions. Note that currently it is only possible for members of the organisation to fully implement these changes. However, if you have suggestions you can clone the repository, make the changes and create a pull request, specifying the purpose of your suggestion. This puts your suggestion to the staging environment. We will thankfully consider your suggestion and potentially decide to implement it by merging your pull request and deploying it to the production environment. If you wish to become a member of the team, you can contact us through our contact information on the [MetaVoice] (LINK).
+To edit specific contents of the website, you may take into account the following directions. Note that currently it is only possible for members of the organisation to fully implement these changes. However, if you have suggestions you can clone the repository, make the changes and create a pull request, specifying the purpose of your suggestion. This puts your suggestion to the staging environment. We will thankfully consider your suggestion and potentially decide to implement it by merging your pull request and deploying it to the production environment. If you wish to become a member of the team, you can contact us through our contact information on the [MetaVoice](https://metavoice.au.dk/about.html) website. 
 
 ### Adding or editing Documentation/Publications/FAQ pages and tabs
 
