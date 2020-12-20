@@ -714,8 +714,10 @@ shinyServer(function(input, output, session) {
 
   # Conditional right column
   output$fewstudies <- renderText({"Currently, there is less than 3 study investigating this feature. Therefore, no model can be run for this feature. For a visualisation of the single study, see the box plot on the left."})
-  output$contribute <- renderText({"If you would like to contribute with a study to the database, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
-                Documentation/Contributing to MetaVoice</a>"})
+  output$contribute <- renderUI({
+    HTML(paste0("If you would like to contribute with a study to the database, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Contributing to MetaVoice</a>."))
+  })
 
   output$experiment_limit_right <- renderUI({
     if (nrow(data()) > 2){
@@ -779,7 +781,7 @@ shinyServer(function(input, output, session) {
           ))
       )
     } else { # KEEP THIS
-      box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), textOutput("contribute"))))
+      box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), uiOutput("contribute"))))
     }
   })
 

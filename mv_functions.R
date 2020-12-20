@@ -503,10 +503,18 @@ add_metavoice_summary_info <- function(metavoice_dataset_info, metavoice_data) {
       num_experiments = length(unique(expt_unique)),#n(), #maybe check if it looks like a reasonable number - does it count rows?
       num_papers = length(unique(study_ID)), .groups = "drop_last")
 
-  subjects <- metavoice_data %>%
-    distinct(dataset, same_sample, .keep_all = TRUE) %>% #add/remove study_ID?
+  subjects_per_group <- metavoice_data %>%
+    group_by(domain, dataset, same_sample) %>%
+    summarise(n_1 = max(n_1),
+              n_2 = max(n_2), .groups = "drop_last")
+
+  subjects <- subjects_per_group %>%
+    #distinct(domain, dataset, same_sample, .keep_all = TRUE) %>% #add/remove study_ID?
     group_by(dataset) %>%
-    summarise(num_subjects = sum(n_1, n_2, na.rm = TRUE), .groups = "drop_last")
+      summarise(num_subjects = sum(n_1, n_2, na.rm = TRUE),
+                num_n1 = sum(n_1, na.rm = TRUE),
+                num_n2 = sum(n_2, na.rm = TRUE),
+                .groups = "drop_last")
 
   metavoice_dataset_info %>%
     rename(dataset = name) %>%

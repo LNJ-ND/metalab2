@@ -20,7 +20,6 @@ shinyUI(
     dashboardHeader(disable = TRUE),
     dashboardSidebar(disable = TRUE),
     dashboardBody(
-      tags$head(includeHTML("./google-analytics.html")),
       tags$head(tags$style("
                   #data_description{
                   display:inline

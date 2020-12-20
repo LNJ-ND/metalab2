@@ -2,7 +2,6 @@ shinyUI(dashboardPage(
   dashboardHeader(disable = TRUE),
   dashboardSidebar(disable = TRUE),
   dashboardBody(
-    tags$head(includeHTML("./google-analytics.html")),
   includeCSS("../common/www/custom.css"),
   tags$style(type = "text/css",
              ".shiny-output-error { visibility: hidden; }",

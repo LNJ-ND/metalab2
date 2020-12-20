@@ -48,7 +48,7 @@ metricsCounter <- function(database) {
  c(nrow(database),
    sum(select(database, num_papers), na.rm = TRUE),
    sum(select(database, num_experiments), na.rm = TRUE),
-   sum(select(database, num_subjects), na.rm = TRUE)
+   (sum(select(database, num_subjects), na.rm = TRUE) - database$num_n2[database$short_name == "voice_lhd_weed_2020"])
    ) %>% as.integer()
 }
 

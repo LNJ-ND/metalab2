@@ -39,7 +39,7 @@ menuNavbar("../")
 ```{r results='asis', echo=FALSE}
 fluidRow(
   column(width = 12,
-    h1(paste(dataset_info$domain, dataset_info$name, sep = ": ")),
+    h1(dataset_info$name),
     tags$ul(
       if (dataset_info$citation != "") {
         if (dataset_info$link == "") {

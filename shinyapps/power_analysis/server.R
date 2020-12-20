@@ -380,8 +380,10 @@ shinyServer(function(input, output, session) {
 
   # conditional text if there are < 3 studies
   output$fewstudies <- renderText({"There are less than 3 studies, which have investigated this feature. Please choose a different feature."})
-  output$contribute <- renderText({"If you would like to contribute with a study, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
-                Documentation/Contributing to MetaVoice</a>"})
+  output$contribute <- renderUI({
+    HTML(paste0("If you would like to contribute with a study to the database, see <a href='https://metavoice.au.dk/documentation.html' target='_blank'>
+                Documentation/Contributing to MetaVoice</a>."))
+  })
 
   # conditional output: if there are < 3 studies display text, otherwise boxes and power curve
   output$conditional_results <- renderUI({
@@ -402,7 +404,7 @@ shinyServer(function(input, output, session) {
 
     ### if there are < 3 studies
     else {
-      box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), textOutput("contribute"))))
+      box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), uiOutput("contribute"))))
     }
   })
 
