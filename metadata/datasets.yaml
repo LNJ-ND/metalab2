@@ -1,5 +1,5 @@
 -
-    name: 'Schizophrenia'
+    name: 'Voice Analysis: Schizophrenia'
     domain: Voice_Analysis
     short_name: voice_scz_parola_2020
     key: 1z5WF7l8aFSVV6qkg46bUHV_zDDZ4KF14nOyiR9Yk9qA
@@ -25,7 +25,7 @@
     #subset: []
     comment: 'Dataset from the original MA can be found on OSF, as described in the original MA paper.'
 -
-    name: 'Autism Spectrum Disorder'
+    name: 'Voice Analysis: Autism Spectrum Disorder'
     domain: Voice_Analysis
     short_name: voice_asd_fusaroli_2017
     key: 1gDoBNtRV51RxAM3C6Xg147PjPh03mUHTkMfShW8GUYo # get key from google sheets
@@ -51,7 +51,7 @@
     #subset: []
     comment: 'Dataset from the original MA can be found on GitHub, as described in the original MA paper.'
 -
-    name: 'Right Hemisphere Damage'
+    name: 'Voice Analysis: Right Hemisphere Damage'
     domain: Voice_Analysis
     short_name: voice_rhd_weed_2020
     key: 1_ajYkJGytc4jdrNGHT03pKiKF3qu8wyvZrhxpchBKqo
@@ -76,7 +76,7 @@
     #subset: []
     comment: 'Dataset from the original MA can be found on OSF, as described in the original MA paper. SDs of 0 were replaced through data imputation.'
 -
-    name: 'Left Hemisphere Damage'
+    name: 'Voice Analysis: Left Hemisphere Damage'
     domain: Voice_Analysis
     short_name: voice_lhd_weed_2020
     key: 1Dwzzm7wN0fG78na2tMb6w7_P8rYXQWWazDslMmGlryM
