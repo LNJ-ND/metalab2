@@ -2,7 +2,7 @@ shinyUI(dashboardPage(
   dashboardHeader(disable = TRUE),
   dashboardSidebar(disable = TRUE),
   dashboardBody(
-  includeCSS("../common/www/custom.css"),
+  includeCSS(here("shinyapps/common/www/custom.css")),
   tags$style(type = "text/css",
              ".shiny-output-error { visibility: hidden; }",
              ".shiny-output-error:before { visibility: hidden; }"),

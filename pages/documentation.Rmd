@@ -52,7 +52,7 @@ display_name <- function(fields) {
 ### Overview
 
 #### Overview
-MetaVoice is a research tool, bridging the gap between research fields investigating voice patterns in different neuropsychiatric disorders. At the moment, MetaVoice contains studies on voice patterns within `r length(unique(dataset_info$domain))` domain(s): `r display_name(unique(dataset_info$domain))`. Within this domain, there are currently datasets related to `r length(unique(dataset_info$name))` disorders: `r display_name(unique(dataset_info$name))`.
+MetaVoice is a research tool, bridging the gap between research fields investigating voice patterns in different neuropsychiatric disorders. At the moment, MetaVoice contains studies on voice patterns within `r length(unique(dataset_info$domain))` domain(s): `r display_name(unique(dataset_info$domain))`. Within this domain, there are currently datasets related to `r length(unique(dataset_info$name))` disorders: Autism Spectrum Disorder, Right Hemisphere Damage, Left Hemisphere Damage and Schizophrenia.
 These datasets include `r as.integer(sum(as.numeric(dataset_info$num_experiments), na.rm = TRUE))` effect sizes from `r as.integer(sum(as.numeric(dataset_info$num_papers), na.rm = TRUE))` papers, including `r as.integer(sum(as.numeric(dataset_info$num_subjects)) - as.numeric(dataset_info$num_n2[dataset_info$short_name == "voice_lhd_weed_2020"]), na.rm = TRUE)` subjects.
 
 These aggregated data help to acquire better estimates of effect sizes across disorders, languages of participants and experimental methods. Thereby, it also becomes possible to explore the impact of potential moderators. The power analysis tool allows researchers to plan future studies with adequate sample sizes.
@@ -122,7 +122,7 @@ If you find or have conducted a meta-analysis within the field of voice patterns
 How: Email one of the team members with information on the meta-analysis, and preferably include a link to or a pdf of the full text (if published), or make sure that information about the data and the data itself is provided in the email (if unpublished). Ideally (but not necessarily), make the data fit the [MA template](https://docs.google.com/spreadsheets/d/1RGemYuBDHG-xWClwralPGeMkqwknW7i4fHqKE-vnvfI/edit#gid=1868444185).
 
 - *Create a new meta-analysis:*
-If you want to contribute by creating your own meta-analysis, please see the [tutorial](http://metalab.stanford.edu/documentation/using_ma_data/) on the MetaLab website. This page will guide you through the different steps of creating a meta-analysis. Be aware that the tutorial page was created based on the field of cognitive development research, rather than voice patterns in neuropsychiatric disorders. Therefore, the [MA template for voice patterns in neuropsychiatric disorders](https://docs.google.com/spreadsheets/d/1RGemYuBDHG-xWClwralPGeMkqwknW7i4fHqKE-vnvfI/edit#gid=1868444185), and the `Field specifications` should be used when creating a meta-analysis within this field.
+If you want to contribute by creating your own meta-analysis, please see the [tutorial](http://metalab.stanford.edu/documentation/using_ma_data/) on the MetaLab website. This page will guide you through the different steps of creating a meta-analysis. Be aware that the tutorial page was created based on the field of early language acquisition and cognitive development, rather than voice patterns in neuropsychiatric disorders. Therefore, the [MA template for voice patterns in neuropsychiatric disorders](https://docs.google.com/spreadsheets/d/1RGemYuBDHG-xWClwralPGeMkqwknW7i4fHqKE-vnvfI/edit#gid=1868444185), and the `Field specifications` should be used when creating a meta-analysis within this field.
 
 - *Suggest a new domain to be added:*
 If you have an idea of a domain to be added which is related to neuropsychiatric disorders, you can contribute by suggesting this domain to us.
@@ -157,17 +157,24 @@ All analyses on the site are conducted with the [`metafor`](http://www.metafor-p
 
 #### Effect Size Computation
 
-Effect size computation is handled by a function called `mv_compute_es`, which can be found in the script [`mv_functions.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/mv_functions.R). This function is based on a script [`compute_es.R`](https://github.com/langcog/metalab2/blob/master/scripts/compute_es.R), which has been developed by MetaLab. MetaLab cites [Hedges & Olkin's textbook](http://www.amazon.com/Statistical-Methods-Meta-Analysis-Larry-Hedges/dp/0123363802) as providing most of the formulas in the script. 
+Effect size computation is handled by a function called `mv_compute_es`, which can be found in the script [`mv_functions.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/mv_functions.R). This function is based on a script [`compute_es.R`](https://rdrr.io/github/langcog/metalabr/src/R/compute_es.R), which has been developed by MetaLab. MetaLab cites [Hedges & Olkin's textbook](https://books.google.dk/books?hl=en&lr=&id=7GviBQAAQBAJ&oi=fnd&pg=PP1&dq=Statistical-Methods-Meta-Analysis-Larry-Hedges&ots=DxS_rQb45A&sig=AQ4GYXZ57Bt8_8UEvbfevHiPO_E&redir_esc=y#v=onepage&q=Statistical-Methods-Meta-Analysis-Larry-Hedges&f=false) (Hedges & Olkin, 2014) as providing most of the formulas in the script. 
 <br/><br/>
 
 #### Statistical Models
 
-The visualisations page uses a multi-level random effects model to conduct the meta-analyses ( `rma.mv` function of `metafor`).
+The meta-analytic visualisations and power analysis tools rely on a multi-level random effects model to conduct the meta-analyses ( `rma.mv` function of `metafor`).
 Random-effect models allow for variability between studies and unique data points. To be specific, in our models a random intercept was defined for each sample (group of participants), since data from the same sample can be expected to be more similar than from a different sample. Further, a random intercept for each study was added, as data from the same study can be expected to be more similar than from a different study. This, thereby also accounts for cases in which the same sample contributed to data in two different studies.
 
-The meta-analytic models are accessible in the script [`shinyapps/visualization/server.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/shinyapps/visualization/server.R) or 
-[`shinyapps/power_analysis/server.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/shinyapps/power_analysis/server.R).
+On the meta-analytic visualisation, we display model summary outputs for two different models. Both of them follow the random-effect structure described above. The **Summary of meta-analytic model with intercept** displays the output for the model which is used for all visualisations provided and for calculation of the overall effect size. The estimates in the model output express the difference to the intercept. More specifically, the model has the following structure: 
 
+`Effect Size ~ 1 + (Moderator1) + ... + (1 | Sample / Study / Unique Row)`
+
+If a moderator is chosen, we also display a **Summary of meta-analytic model without intercept**. The estimates in the model output here correspond to the absolute values for the single levels/factors of the chosen moderator. More specifically, the model has the following structure: 
+
+`Effect Size ~ 0 + Moderator1 + ... + (1 | Sample / Study / Unique Row)`
+
+The meta-analytic models are also accessible in the script [`shinyapps/visualization/server.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/shinyapps/visualization/server.R) or 
+[`shinyapps/power_analysis/server.R`](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/shinyapps/power_analysis/server.R).
 
 
 ### Field Specifications
@@ -247,7 +254,7 @@ drv_table <- make_datatable(fields_derived)
 ### Export Data
 
 #### Download the data
-You can download the data from both the [home page](.), [visualization page](./app.html?id=visualization) and the [documentation page](./documentation.html).
+You can download the data from both the [home page](.), [visualisation page](./app.html?id=visualisation) and the [documentation page](./documentation.html).
 
 1. From the [home page](.)
 
@@ -259,7 +266,7 @@ You can download the data from both the [home page](.), [visualization page](./a
       
     1.4. Choose the data format that you want (EXCEL - recommended for manual calculations using a spreadsheet software - but you should make sure that your local spreadsheet software is set to use "." as decimal separator to avoid errors, or CSV - recommended for reading into a statistical software such as R) by clicking on it in the conditional menu. 
    
-2. From the [visualization page](./app.html?id=visualization)
+2. From the [visualisation page](./app.html?id=visualisation)
    
     2.1. Open the “Domain” drop-down menu and click on the one you are interested in. Currently only one domain is available.
 

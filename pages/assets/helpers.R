@@ -22,7 +22,7 @@ iconWrap <- function(x) {
   shiny::tags$i(class = paste0("fa fa-", x))
 }
 
-valueBoxes <- function(values, descriptions=c("Meta-analyses", "Papers", "Effect sizes", "Participants"), icons=c("cubes", "file-text-o", "list", "child")) {
+valueBoxes <- function(values, descriptions=c("Meta-analyses", "Papers", "Effect sizes", "Participants"), icons=c("cubes", "file-text-o", "list", "users")) {
   fluidRow(class = "value-box",
     map(1:4,
       ~ shinydashboard::valueBox(

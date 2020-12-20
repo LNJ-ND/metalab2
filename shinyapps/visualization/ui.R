@@ -32,7 +32,7 @@ shinyUI(
                   #ma_model_blurb{
                   display:inline
                   }")),
-      includeCSS("../common/www/custom.css"),
+      includeCSS(here("shinyapps/common/www/custom.css")),
       tags$style(type = "text/css",
                  ".shiny-output-error { visibility: hidden; }",
                  ".shiny-output-error:before { visibility: hidden; }"),
@@ -74,7 +74,7 @@ shinyUI(
                 column(
                   width = 4,
                   selectInput("es_type", label = "Effect size type", #CHANGE: selectInput!!!!
-                              choices = es_choices, selected = "d"),
+                              choices = es_choices, selected = "g"),
                   uiOutput("es_help_text"),
                   br(),
                   bsPopover("es_type", title = NULL,
