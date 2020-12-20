@@ -3,12 +3,12 @@ Analyses:
   - id:    visualisation
     title: Meta-Analytic Visualisations
     image: images/apps/mv_visualisation.png
-    url: 'https://metavoice.shinyapps.io/visualization/'
+    url: https://metavoice.shinyapps.io/visualization/
 
   - id:    power_analysis
     title: Power Analysis
     image: images/apps/mv_power_analysis.png
-    url: 'https://metavoice.shinyapps.io/power_analysis/'
+    url: https://metavoice.shinyapps.io/power_analysis/
   # - id:    power_simulation
   #   title: Power Simulation
   #   image: images/apps/mv_power_simulation.png

@@ -12,7 +12,7 @@ shinyapps <-  yaml::yaml.load_file(here("metadata", "shinyapps.yaml"))
 # if moved to server, this line should be used: map(~ paste0("'", .$id, "':'", serverAddress, .$id, "/'")
 apps_locations_map <- unlist(shinyapps, recursive = F) %>%
   unname() %>%
-  map(~ paste0("'", .$id, "':", .$url)) %>% 
+  map(~ paste0("'", .$id, "':'", .$url, "'")) %>% 
   {do.call("paste", c(., sep = ","))} %>%
   paste("{", ., "}")
 
