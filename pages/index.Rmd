@@ -5,6 +5,10 @@ pagetitle: MetaVoice
 ```{r child='assets/setup.Rmd'}
 ```
 
+```{r, echo=FALSE}
+htmltools::includeHTML("favicontest.html")
+```
+
 ```{r tools, echo=FALSE}
 domainBox <- function(i, data_domains, offsets, link) {
   data <- data_domains[[i]] 
@@ -135,6 +139,7 @@ fluidRow(class = "domain-info2",
 ```{r, echo=FALSE}
 htmltools::includeHTML("footer.html")
 ```
+
 
 <!-- <script> -->
 <!--   document.getElementsByTagName("head")[0].innerHTML += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"images/logo/favicon/favicon-32x32.png\">"; -->
