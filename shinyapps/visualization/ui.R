@@ -20,7 +20,6 @@ shinyUI(
     dashboardHeader(disable = TRUE),
     dashboardSidebar(disable = TRUE),
     dashboardBody(
-      tags$head(includeHTML("./google-analytics.html")),
       tags$head(tags$style("
                   #data_description{
                   display:inline
@@ -104,7 +103,7 @@ shinyUI(
                 fluidRow(
                   column(
                     width = 10,
-                    p(strong("Box plot"), "of effect sizes"))),
+                    p(strong("Box plot or scatter plot"), "of effect sizes"))),
                 conditionalPanel(condition = "input.moderators == 'mean_age'", #ADDED CONDITIONAL PANEL
                   fluidRow(column(
                     width = 7,
