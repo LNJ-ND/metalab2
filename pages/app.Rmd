@@ -30,5 +30,5 @@ responsiveIFrame()
 ```
 
 ```{r, echo=FALSE}
-htmltools::includeHTML("footer.html")
+htmltools::includeHTML("shiny_footer.html")
 ```
