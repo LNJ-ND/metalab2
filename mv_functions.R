@@ -562,7 +562,7 @@ ci_upper <- function(x, na.rm = FALSE) {
 }
 
 # colors used in shiny apps
-# scolarised palette
+#scolarised palette
 solarized_palette <- function(num_values) {
 
   solarized_colors <- c(magenta = "#d33682",
