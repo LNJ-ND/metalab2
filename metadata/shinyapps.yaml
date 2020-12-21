@@ -1,7 +1,7 @@
 Analyses:
 
-  - id:    visualization
-    title: Meta-Analytic Visualizations
+  - id:    visualisation
+    title: Meta-Analytic Visualisations
     image: images/apps/mv_visualisation.png
     #url:
 

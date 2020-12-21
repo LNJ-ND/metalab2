@@ -341,7 +341,7 @@ shinyServer(function(input, output, session) {
 
     p <- if ("mean_age" %in% input$moderators) {
        p <- ggplot(mod_data(), aes_string(x = "mean_age", y = es(), color = mod_group())) +
-        geom_point(aes(size = n, text = paste(expt_unique), alpha=0.5)) + #remove pastee
+        geom_point(aes(size = n, text = paste(expt_unique), alpha=0.8)) + #remove pastee
         geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
         scale_colour_solarized(name = "", labels = labels, guide = guide) +
         scale_size_continuous(guide = FALSE) +
@@ -358,11 +358,11 @@ shinyServer(function(input, output, session) {
 
     } else {
        ggplot(mod_data(), aes_string(x = mod_group(), y = es(), color = mod_group())) +
-                  geom_point(position = "jitter", aes(size = n, text = paste(expt_unique)), alpha=0.5) +
-                  geom_boxplot(fill = "white", alpha=0.5) +
+                  geom_point(position = "jitter", aes(size = n, text = paste(expt_unique)), alpha=0.8) +
+                  geom_boxplot(fill = "white", alpha=0.8) +
                   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") + #ADDED LINE
                   labs(x = x_lab, y = "Effect Size") +
-                  scale_colour_solarized(name = "", labels = labels, guide = guide) +
+                  scale_colour_solarized(name = display_name(mod_group()), labels = labels, guide = guide) +
                   scale_size_continuous(guide = FALSE)
     }
 
@@ -417,7 +417,7 @@ shinyServer(function(input, output, session) {
                                        colour = mod_group())) +
       coord_flip() +
       geom_violin() +
-      geom_jitter(aes(text = expt_unique), height = 0) +
+      geom_jitter(aes(text = expt_unique), height = 0, alpha=0.8) +
       geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
       scale_colour_solarized(name = "", guide = FALSE) +
       xlab("") +
@@ -470,11 +470,11 @@ shinyServer(function(input, output, session) {
       geom_point(aes_string(x = "expt_unique", y = "estimate", colour = mod_group()),
                  shape = 17) +
       geom_linerange(aes_string(x = "expt_unique", y = "estimate", ymin = "estimate.cil",
-                                ymax = "estimate.cih", colour = mod_group(), alpha = 0.7)) +
+                                ymax = "estimate.cih", colour = mod_group())) +
       geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
       coord_flip() +
       scale_size_continuous(range = c(1, 3), guide = FALSE) +
-      scale_colour_solarized(name = "", labels = labels, guide = guide) +
+      scale_colour_solarized(name = display_name(mod_group()), labels = labels, guide = guide) +
       xlab("") +
       ylab("Effect Size")
 
@@ -645,12 +645,12 @@ shinyServer(function(input, output, session) {
                    fill = "white") +
       geom_polygon(aes(x = x, y = y), data = funnel99, alpha = .5,
                    fill = "white") +
-      geom_point(aes_string(x = "es", y = "-se", colour = mod_group(), text = "slab")) +
+      geom_point(aes_string(x = "es", y = "-se", colour = mod_group(), text = "slab"), alpha=0.8) +
       #aes(size = n, text = paste(expt_unique), alpha=0.5)
       geom_vline(aes(), xintercept = center, linetype = "dotted", color = "black") +
       xlab(xlabel) +
       ylab(ylabel) +
-      scale_colour_solarized(name = "", labels = labels, guide = guide) +
+      scale_colour_solarized(name = display_name(mod_group()), labels = labels, guide = guide) +
       scale_x_continuous(limits = c(left_lim99, right_lim99)) +
       scale_y_continuous(labels = function(x){abs(x)}) +
       theme(panel.background = element_rect(fill = "grey"),
