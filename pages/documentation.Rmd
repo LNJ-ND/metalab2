@@ -53,7 +53,7 @@ display_name <- function(fields) {
 
 #### Overview
 MetaVoice is a research tool, bridging the gap between research fields investigating voice patterns in different neuropsychiatric disorders. At the moment, MetaVoice contains studies on voice patterns within `r length(unique(dataset_info$domain))` domain(s): `r display_name(unique(dataset_info$domain))`. Within this domain, there are currently datasets related to `r length(unique(dataset_info$name))` disorders: Autism Spectrum Disorder, Right Hemisphere Damage, Left Hemisphere Damage and Schizophrenia.
-These datasets include `r as.integer(sum(as.numeric(dataset_info$num_experiments), na.rm = TRUE))` effect sizes from `r as.integer(sum(as.numeric(dataset_info$num_papers), na.rm = TRUE))` papers, including `r as.integer(sum(as.numeric(dataset_info$num_subjects)) - as.numeric(dataset_info$num_n2[dataset_info$short_name == "voice_lhd_weed_2020"]), na.rm = TRUE)` subjects.
+These datasets include `r as.integer(sum(as.numeric(dataset_info$num_effectsize), na.rm = TRUE))` effect sizes from `r as.integer(sum(as.numeric(dataset_info$num_papers), na.rm = TRUE))` papers, including `r as.integer(sum(as.numeric(dataset_info$num_subjects)) - as.numeric(dataset_info$num_n2[dataset_info$short_name == "voice_lhd_weed_2020"]), na.rm = TRUE)` subjects.
 
 These aggregated data help to acquire better estimates of effect sizes across disorders, languages of participants and experimental methods. Thereby, it also becomes possible to explore the impact of potential moderators. The power analysis tool allows researchers to plan future studies with adequate sample sizes.
 <br/><br/>
@@ -98,7 +98,7 @@ for (i in 1:nrow(dataset_info)) {
   }
   
   ret <- paste(ret, sprintf("<h6> [%s](/dataset/%s.html) \n\n * Citation: %s \n\n * N papers = %s, N effect sizes = %s \n\n * Curator: %s \n\n * Comments: %s \n\n",
-                            dataset$name, dataset$short_name, dataset$full_citation, dataset$num_papers, dataset$num_experiments, dataset$curator, dataset$comment))
+                            dataset$name, dataset$short_name, dataset$full_citation, dataset$num_papers, dataset$num_effectsize, dataset$curator, dataset$comment))
 }
 cat(ret)
 ```
