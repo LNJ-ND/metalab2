@@ -20,7 +20,8 @@ Questions and answers will be added as they come in.
 
 ### About the Analyses
 
-Questions and answers will be added as they come in.
+#### What should I do if the analysis tools (shiny apps) are not loading? 
+If the analysis tools are not loading on the website, you can try acessing them directly, by following these links for the [Meta-Analytic Visualisations](https://metavoice.shinyapps.io/visualization/) and the [Power Analysis](https://metavoice.shinyapps.io/power_analysis/). If they are not loading on these links, please [contact us](./about.html). 
 
 ## {-}
 ```{r, echo=FALSE}
