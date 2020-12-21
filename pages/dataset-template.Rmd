@@ -82,7 +82,7 @@ fluidRow(
           rownames = FALSE,
           extensions = c('Buttons', 'FixedColumns'),
           options = list(scrollX = TRUE, autoWidth = TRUE, pageLength = 20,
-                         columnDefs = list(list(width = '200px', targets = c(2,5,7,15))),
+                         columnDefs = list(list(width = '200px', targets = c(2,5,7,15,43))),
             dom = 'Bfrtip',
             buttons = list(
               'print',

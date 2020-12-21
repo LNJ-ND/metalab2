@@ -37,6 +37,8 @@ dataset_info <- add_metavoice_summary_info(dataset_yaml, metavoice_data)
 
 feature_help_texts <- c(
   "speech_duration" = "Duration of speech (referring to e.g. syllables, lexical items (words) or full utterances)",
+  "speech_duration_ratio" = "Ratio of speech duration 1/2 (e.g. syllable 1/2)",
+  "speech_duration_variability" = "Variability of speech durtion (e.g. syllable duration)",
   "speech_rate" = "Speed of speech, measured as syllables or words over time (in minutes or seconds)",
   "speech_percentage" = "Percentage of spoken time (i.e. non-pause time)",
   "pause_duration" = "Mean pause duration",
@@ -49,6 +51,7 @@ feature_help_texts <- c(
   "pitch_sd" = "Dispersion of pitch, measured in standard deviations",
   "pitch_variability" = "Dispersion of pitch, measured in standard deviation or variance (whether it is in relation to a phoneme, word or utterance)",
   "pitch_range" = "Difference between the lowest and highest value of pitch",
+  "F0_contour" = "Linearity/slope of pitch contour",
   "f1" = "The 1st spectral peak of the sound spectrum generated in speech",
   "f2" = "The 2nd spectral peak of the sound spectrum generated in speech",
   "f3" = "The 3rd spectral peak of the sound spectrum generated in speech",
