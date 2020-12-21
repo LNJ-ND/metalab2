@@ -51,7 +51,7 @@ The [renv.lock](https://github.com/LNJ-ND/MetaVoice_Website/blob/master/renv.loc
 
 Building MetaVoice locally can be used simply for reproduction, but also for development purposes. Instructions on how to contribute to MetaVoice are presented below. 
 
-To reproduce MetaVoice (datasets, website pages, shiny apps) locally, follow the steps below: 
+To reproduce MetaVoice (datasets, website pages, shiny apps) locally, follow the steps below. Steps 1-3 are required for both to reproduce the website pages (step 4) and the shiny apps (step 5). But, if you are only interested in the shinyapps (step 5), you can skip step 4. 
 
 **Additional instructions for Windows Users:** If you are planning to reproduce MetaVoice on Windows, you should install the appropriate version of [Rtools](https://cran.r-project.org/bin/windows/Rtools/). Rtools will install the toolchain (compilers and links) necessary to build R packages from source code in the Windows environment.
 
@@ -84,7 +84,7 @@ library(renv)
 renv::restore()
 ```
 
-#### 4. Buildig the website (pages) locally
+#### 4. Building the website (pages) locally
 
 To reproduce the pages of the website, you can run the following code in your R console:  
 
@@ -93,7 +93,10 @@ To reproduce the pages of the website, you can run the following code in your R 
 source(here::here("scripts", "main_builder.R"))
 ```
 
-#### 5. Buildig the shiny apps locally
+Now you can access the single rendered pages in a directory within the project on your computer called `rendered`, or you can view the entire website on the Viewer panel in RStudio. 
+
+
+#### 5. Building the shiny apps locally
 
 To run the shiny apps locally you can run the following code, depending on the app you are interested in: 
 

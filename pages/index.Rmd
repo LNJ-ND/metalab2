@@ -74,7 +74,7 @@ div(
       br(),  
       br(),
       "Explore the datasets, the statistical approach and learn how to contribute under",
-      tags$a(href = "/documentation.html", "Documentation,")),
+      tags$a(href = "/documentation.html", "Documentation.")),
     column(width = 1)
   )
 )

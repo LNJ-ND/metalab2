@@ -1,7 +1,7 @@
 ---
 pagetitle: MetaVoice Domain
 params:
-  dataset: !r data.frame(name=character(1), short_name=character(1), num_papers=integer(1), num_experiments=integer(1), num_subjects=integer(1), stringsAsFactors = FALSE)
+  dataset: !r data.frame(name=character(1), short_name=character(1), num_papers=integer(1), num_effectsize=integer(1), num_subjects=integer(1), stringsAsFactors = FALSE)
   domain_name: !r yaml::yaml.load_file(here::here("metadata", "domains.yaml"))[[1]]$title
 ---
 

@@ -500,7 +500,7 @@ add_metavoice_summary_info <- function(metavoice_dataset_info, metavoice_data) {
   studies <- metavoice_data %>%
     group_by(dataset) %>%
     summarise(
-      num_experiments = length(unique(expt_unique)),#n(), #maybe check if it looks like a reasonable number - does it count rows?
+      num_effectsize = n(),#n(), #maybe check if it looks like a reasonable number - does it count rows?
       num_papers = length(unique(study_ID)), .groups = "drop_last")
 
   subjects_per_group <- metavoice_data %>%

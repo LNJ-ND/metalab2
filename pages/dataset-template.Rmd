@@ -54,7 +54,7 @@ fluidRow(
       tags$li(
         paste0(
           "N papers = ", as.integer(dataset_info$num_papers),
-          ", N experiments = ", as.integer(dataset_info$num_experiments),
+          ", N effect sizes = ", as.integer(dataset_info$num_effectsize),
           ", N participants = ", as.integer(dataset_info$num_subjects)
           )
         ),
