@@ -720,7 +720,8 @@ shinyServer(function(input, output, session) {
     if (nrow(data()) > 2){
       list(
         fluidRow(
-          box(width = NULL, #status = "danger",
+          column(width = 12,
+            box(width = NULL, #status = "danger",
               fluidRow(
                 column(
                   width = 10,
@@ -775,7 +776,7 @@ shinyServer(function(input, output, session) {
                 )
               )
           ))
-      )
+      ))
     } else { # KEEP THIS
       box(width = NULL, fluidRow(column(width = 12, textOutput("fewstudies"), br(), uiOutput("contribute"))))
     }
