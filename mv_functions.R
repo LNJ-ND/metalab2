@@ -48,10 +48,10 @@ mv_load_and_validate_dataset <- function(dataset_info) {
            # mean_age_months = mean_age / avg_month) %>%
      # filter(!is.na(d_calc)) %>%
      mutate(
-       # year = ifelse(
-         # test = grepl("submitted", study_ID),
-         # yes = Inf,
-         # no = stringr::str_extract(study_ID, "([:digit:]{4})")),
+       year = ifelse(
+        test = grepl("submitted", study_ID),
+        yes = Inf,
+        no = stringr::str_extract(study_ID, "([:digit:]{4})")),
        study_ID = as.character(study_ID),
        same_sample = as.character(same_sample),
        expt_unique = as.character(expt_unique), #factor?
@@ -536,10 +536,10 @@ mv_load_cached_dataset <- function(filename) {
     stringsAsFactors = FALSE) %>%
     mutate(
       filename = filename,
-      # year = ifelse(
-      #   test = grepl("submitted", study_ID),
-      #   yes = Inf,
-      #   no = stringr::str_extract(study_ID, "([:digit:]{4})"))
+      year = ifelse(
+        test = grepl("submitted", study_ID),
+        yes = Inf,
+        no = stringr::str_extract(study_ID, "([:digit:]{4})"))
     ) %>%
     mutate(
       study_ID = as.character(study_ID),

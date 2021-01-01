@@ -455,14 +455,15 @@ shinyServer(function(input, output, session) {
              identity = 1) %>%
       left_join(mutate(mod_data(), expt_unique = expt_unique)) %>%
       arrange_(.dots = list(sprintf("desc(%s)", input$forest_sort),
-                            "desc(effects)"))
+                            "desc(effects)")) %>%
+      mutate(expt_unique = factor(expt_unique, levels = expt_unique))
 
     labels <- if (mod_group() == "all_mod") NULL else
       setNames(paste(mod_data()[[mod_group()]], "  "), mod_data()[[mod_group()]])
     guide <- if (mod_group() == "all_mod") FALSE else "legend"
 
-    plt <- ggplot(data = forest_data) +
-      geom_point(aes(x = expt_unique, y = effects, size = inverse_vars, text = expt_unique)) + #CHANGED TO EXPT_UNIQUE EVERYWHERE
+    plt <- ggplot(data = forest_data[order(forest_data$effects), ]) +
+      geom_point(data = forest_data[order(forest_data$effects), ], aes(x = expt_unique, y = effects, size = inverse_vars, text = expt_unique)) + #CHANGED TO EXPT_UNIQUE EVERYWHERE
       geom_linerange(aes(x = expt_unique, y = effects, ymin = effects.cil, ymax = effects.cih)) +
       geom_point(aes_string(x = "expt_unique", y = "estimate", color = mod_group()),
                  shape = 17) +
@@ -488,6 +489,7 @@ shinyServer(function(input, output, session) {
     }
 
   }
+
 
   output$forest <- renderPlotly({
     forest()
