@@ -24,3 +24,6 @@ If you are interested, [MetaLab](http://metalab.stanford.edu/app/power-simulatio
 
 ## visualization 
 This app is published on the [Metavoice website](https://metavoice.au.dk/app.html?id=visualisation). It presents meta-analytic visualisations of meta-analysis conducted based on the input of the user in relation to a specific disorder, voice feature and optional moderator. 
+
+## shinyapps_deploy.R
+This script can be used to deploy apps to shinyapps.io. It copies the necessary files and directories into a common folder for each app, and deploys it. 
