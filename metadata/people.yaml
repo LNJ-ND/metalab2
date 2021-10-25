@@ -1,13 +1,22 @@
 Team/Curators:
 
+  - name:         Riccardo Fusaroli
+    role:         Project Supervisor
+    email:        fusaroli@cc.au.dk
+    website:
+    affiliation:  Associate Professor at Aarhus University
+    image:        images/people/riccardo_fusaroli.jpg
+
   - name:         Louise Nyholm Jensen
+    role:         Project Developer
     email:        201809497@post.au.dk
     website:      http://github.com/louisenyholm
-    affiliation:  Aarhus University
+    affiliation:  Student at Aarhus University
     image:        images/people/louise_nyholm.jpg
 
   - name:         Nicole Dwenger
+    role:         Project Developer
     email:        201805351@post.au.dk
     website:      http://github.com/NicoleDwe
-    affiliation:  Aarhus University
+    affiliation:  Student at Aarhus University
     image:        images/people/nicole_dwenger.jpg

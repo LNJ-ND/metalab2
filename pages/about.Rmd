@@ -17,6 +17,8 @@ renderMemberInfo <- function(memberInfo) {
       solidHeader = TRUE, 
       img(src = memberInfo$image, width = 180, height = 180),
       a(h4(strong(memberInfo$name)), href = memberInfo$website, target = "_blank"),
+      memberInfo$role,
+      br(),
       memberInfo$affiliation,
       br(),
       if (!is.null(memberInfo$email)) a(memberInfo$email, href = sprintf("mailto:%s", memberInfo$email)),
